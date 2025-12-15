@@ -27,6 +27,9 @@ EOF
 chown -R claude:claude /workspace
 chown -R claude:claude /home/claude/.config 2>/dev/null || true
 
+# Playwright Cache/Locks aufräumen (verhindert "Browser already in use" Fehler)
+rm -rf /home/claude/.cache/ms-playwright/mcp-chrome-* 2>/dev/null || true
+
 # Claude Code Version anzeigen
 echo "Claude Code Version:"
 su - claude -c "claude-code --version" 2>/dev/null || echo "  (Fehler beim Abrufen der Version)"
