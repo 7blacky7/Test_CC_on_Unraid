@@ -52,8 +52,10 @@ RUN curl -fsSL https://claude.ai/install.sh | bash && \
 
 # Playwright installieren mit allen Browsern (global für alle User)
 RUN npm install -g playwright && \
+    mkdir -p /usr/local/share/playwright && \
     PLAYWRIGHT_BROWSERS_PATH=/usr/local/share/playwright npx playwright install --with-deps chromium firefox webkit && \
     PLAYWRIGHT_BROWSERS_PATH=/usr/local/share/playwright npx playwright install chrome && \
+    chmod -R 755 /usr/local/share/playwright && \
     echo 'export PLAYWRIGHT_BROWSERS_PATH=/usr/local/share/playwright' >> /etc/profile.d/playwright.sh && \
     chmod +r /etc/profile.d/playwright.sh
 
@@ -61,9 +63,16 @@ RUN npm install -g playwright && \
 RUN useradd -m -s /bin/bash claude && \
     echo "claude ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
-# Arbeitsverzeichnis erstellen
+# Arbeitsverzeichnis und Skills erstellen
 RUN mkdir -p /workspace && chown claude:claude /workspace
 RUN mkdir -p /home/claude/.config && chown -R claude:claude /home/claude
+RUN mkdir -p /home/claude/.claude/skills && chown -R claude:claude /home/claude/.claude
+
+# Playwright Skills kopieren
+COPY skills/ /home/claude/.claude/skills/
+RUN chown -R claude:claude /home/claude/.claude/skills && \
+    find /home/claude/.claude/skills -name "*.sh" -exec chmod +x {} \; && \
+    find /home/claude/.claude/skills -name "*.js" -exec chmod +x {} \;
 
 # Wrapper-Script für claude mit Cache-Cleanup
 RUN echo '#!/bin/bash' > /usr/local/bin/claude-clean && \
@@ -71,7 +80,8 @@ RUN echo '#!/bin/bash' > /usr/local/bin/claude-clean && \
     echo 'exec /usr/local/bin/claude "$@"' >> /usr/local/bin/claude-clean && \
     chmod +x /usr/local/bin/claude-clean && \
     echo 'alias claude="claude-clean"' >> /home/claude/.bashrc && \
-    echo 'export PLAYWRIGHT_BROWSERS_PATH=/usr/local/share/playwright' >> /home/claude/.bashrc
+    echo 'export PLAYWRIGHT_BROWSERS_PATH=/usr/local/share/playwright' >> /home/claude/.bashrc && \
+    echo 'export PATH="/home/claude/.claude/skills:$PATH"' >> /home/claude/.bashrc
 
 WORKDIR /workspace
 
