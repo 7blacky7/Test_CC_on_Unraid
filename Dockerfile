@@ -50,9 +50,10 @@ RUN curl -fsSL https://claude.ai/install.sh | bash && \
     cp /root/.local/share/claude/versions/* /usr/local/bin/claude && \
     chmod +x /usr/local/bin/claude
 
-# Playwright installieren (optional für Testing)
+# Playwright installieren mit allen Browsern
 RUN npm install -g playwright && \
-    npx playwright install --with-deps chromium
+    npx playwright install --with-deps chromium firefox webkit && \
+    npx playwright install chrome
 
 # User für Claude Code erstellen (VOR dem Arbeitsverzeichnis!)
 RUN useradd -m -s /bin/bash claude && \
