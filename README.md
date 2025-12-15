@@ -2,11 +2,13 @@
 
 Claude Code in einem Docker-Container auf Unraid ausführen, mit Zugriff über Web-Terminal.
 
+> **🚀 Schnellstart:** Siehe [INSTALL.md](INSTALL.md) für die 5-Schritte-Anleitung
+
 ## Voraussetzungen
 
-- Unraid Server
-- Claude Max Abo (für OAuth-Login)
-- Docker auf Unraid aktiviert
+- Unraid Server mit Docker
+- Claude Max oder Claude Pro Abo (OAuth-Login)
+- ~5 GB freier Speicher für das Image
 
 ## Features
 
