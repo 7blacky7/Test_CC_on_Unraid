@@ -50,10 +50,12 @@ RUN curl -fsSL https://claude.ai/install.sh | bash && \
     cp /root/.local/share/claude/versions/* /usr/local/bin/claude && \
     chmod +x /usr/local/bin/claude
 
-# Playwright installieren mit allen Browsern
+# Playwright installieren mit allen Browsern (global für alle User)
 RUN npm install -g playwright && \
-    npx playwright install --with-deps chromium firefox webkit && \
-    npx playwright install chrome
+    PLAYWRIGHT_BROWSERS_PATH=/usr/local/share/playwright npx playwright install --with-deps chromium firefox webkit && \
+    PLAYWRIGHT_BROWSERS_PATH=/usr/local/share/playwright npx playwright install chrome && \
+    echo 'export PLAYWRIGHT_BROWSERS_PATH=/usr/local/share/playwright' >> /etc/profile.d/playwright.sh && \
+    chmod +r /etc/profile.d/playwright.sh
 
 # User für Claude Code erstellen (VOR dem Arbeitsverzeichnis!)
 RUN useradd -m -s /bin/bash claude && \
@@ -68,7 +70,8 @@ RUN echo '#!/bin/bash' > /usr/local/bin/claude-clean && \
     echo 'rm -rf ~/.cache/ms-playwright/mcp-chrome-* 2>/dev/null' >> /usr/local/bin/claude-clean && \
     echo 'exec /usr/local/bin/claude "$@"' >> /usr/local/bin/claude-clean && \
     chmod +x /usr/local/bin/claude-clean && \
-    echo 'alias claude="claude-clean"' >> /home/claude/.bashrc
+    echo 'alias claude="claude-clean"' >> /home/claude/.bashrc && \
+    echo 'export PLAYWRIGHT_BROWSERS_PATH=/usr/local/share/playwright' >> /home/claude/.bashrc
 
 WORKDIR /workspace
 
