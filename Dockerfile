@@ -42,8 +42,8 @@ RUN cd /tmp && \
     make && make install && \
     cd / && rm -rf /tmp/ttyd
 
-# Claude Code global installieren
-RUN npm install -g @anthropic/claude-code
+# Claude Code installieren (native binary)
+RUN curl -fsSL https://claude.ai/install.sh | bash
 
 # Playwright installieren (optional für Testing)
 RUN npm install -g playwright && \
