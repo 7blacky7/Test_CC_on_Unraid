@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   claude-code:
-    build: .
+    image: claude-code-local
     container_name: claude-code
     hostname: claude-code
     restart: unless-stopped
