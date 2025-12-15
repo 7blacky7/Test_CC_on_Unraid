@@ -42,8 +42,10 @@ RUN cd /tmp && \
     make && make install && \
     cd / && rm -rf /tmp/ttyd
 
-# Claude Code installieren (native binary)
-RUN curl -fsSL https://claude.ai/install.sh | bash
+# Claude Code installieren (als root, damit es global verfügbar ist)
+RUN curl -fsSL https://claude.ai/install.sh | bash && \
+    # Symlink für alle User
+    ln -sf /root/.local/bin/claude-code /usr/local/bin/claude-code 2>/dev/null || true
 
 # Playwright installieren (optional für Testing)
 RUN npm install -g playwright && \
