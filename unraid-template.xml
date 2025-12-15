@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>claude-code</Name>
+  <Repository>claude-code-local</Repository>
+  <Registry>https://github.com/7blacky7/Test_CC_on_Unraid</Registry>
+  <Network>bridge</Network>
+  <MyIP/>
+  <Shell>bash</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/7blacky7/Test_CC_on_Unraid/issues</Support>
+  <Project>https://github.com/anthropics/claude-code</Project>
+  <Overview>
+    Claude Code in Docker mit Web-Terminal Zugriff.
+
+    Features:
+    - Claude Code mit OAuth-Login (Claude Max/Pro)
+    - Web-Terminal über Browser (ttyd)
+    - Playwright für Browser-Testing
+    - Persistente Daten und Auth-Tokens
+
+    Nach dem Start:
+    1. Öffne http://&amp;lt;server-ip&amp;gt;:7681
+    2. Login: claude / claude123
+    3. Führe aus: claude-code auth login
+    4. Folge dem Link im Browser zum Anmelden
+  </Overview>
+  <Category>Productivity: Tools:</Category>
+  <WebUI>http://[IP]:[PORT:7681]</WebUI>
+  <TemplateURL>https://raw.githubusercontent.com/7blacky7/Test_CC_on_Unraid/main/unraid-template.xml</TemplateURL>
+  <Icon>https://raw.githubusercontent.com/anthropics/claude-code/main/assets/icon.png</Icon>
+  <ExtraParams>--shm-size=2g</ExtraParams>
+  <PostArgs/>
+  <CPUset/>
+  <DateInstalled/>
+  <DonateText/>
+  <DonateLink/>
+  <Requires/>
+  <Config Name="Web Terminal Port" Target="7681" Default="7681" Mode="tcp" Description="Port für Web-Terminal (ttyd)" Type="Port" Display="always" Required="true" Mask="false">7681</Config>
+  <Config Name="Workspace" Target="/workspace" Default="/mnt/y/appdata/claude-code/workspace" Mode="rw" Description="Arbeitsverzeichnis für Claude Code" Type="Path" Display="always" Required="true" Mask="false">/mnt/y/appdata/claude-code/workspace</Config>
+  <Config Name="Claude Config" Target="/home/claude/.config/claude-code" Default="/mnt/y/appdata/claude-code/config" Mode="rw" Description="Claude Code Konfiguration und Auth-Tokens" Type="Path" Display="always" Required="true" Mask="false">/mnt/y/appdata/claude-code/config</Config>
+  <Config Name="Timezone" Target="TZ" Default="Europe/Berlin" Mode="" Description="Zeitzone" Type="Variable" Display="always" Required="false" Mask="false">Europe/Berlin</Config>
+</Container>

@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  claude-code:
+    build: .
+    container_name: claude-code
+    hostname: claude-code
+    restart: unless-stopped
+
+    # Port für Web-Terminal
+    ports:
+      - "7681:7681"  # ttyd Web Terminal
+
+    # Umgebungsvariablen
+    environment:
+      - TZ=Europe/Berlin
+      - NODE_ENV=development
+
+    # Volumes für persistente Daten
+    volumes:
+      # Arbeitsverzeichnis (hier arbeitet Claude Code)
+      - ./workspace:/workspace
+      # WICHTIG: Claude Auth Tokens persistent speichern!
+      - ./claude-config:/home/claude/.config/claude-code
+
+    # Mehr Ressourcen für Browser/Playwright
+    shm_size: 2gb
+
+    # Netzwerk
+    networks:
+      - claude-network
+
+networks:
+  claude-network:
+    driver: bridge

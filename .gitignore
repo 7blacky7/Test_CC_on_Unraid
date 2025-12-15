@@ -1,0 +1,13 @@
+# Docker Volumes - nicht ins Repo
+workspace/
+claude-config/
+
+# Docker
+.env
+
+# System
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
