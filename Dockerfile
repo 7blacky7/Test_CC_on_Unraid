@@ -63,6 +63,13 @@ RUN useradd -m -s /bin/bash claude && \
 RUN mkdir -p /workspace && chown claude:claude /workspace
 RUN mkdir -p /home/claude/.config && chown -R claude:claude /home/claude
 
+# Wrapper-Script für claude mit Cache-Cleanup
+RUN echo '#!/bin/bash' > /usr/local/bin/claude-clean && \
+    echo 'rm -rf ~/.cache/ms-playwright/mcp-chrome-* 2>/dev/null' >> /usr/local/bin/claude-clean && \
+    echo 'exec /usr/local/bin/claude "$@"' >> /usr/local/bin/claude-clean && \
+    chmod +x /usr/local/bin/claude-clean && \
+    echo 'alias claude="claude-clean"' >> /home/claude/.bashrc
+
 WORKDIR /workspace
 
 # Port für ttyd Web-Terminal
