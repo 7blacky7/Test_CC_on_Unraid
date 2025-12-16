@@ -27,43 +27,19 @@ const TerminalWindow = ({
   id,
   windowId,
   title = 'Terminal',
-  initialPosition = null,
-  initialSize = null,
+  icon = 'terminal',
   ...props
 }) => {
-  const { windows } = useWindowStore();
   const effectiveId = id || windowId;
-  const currentWindow = useMemo(
-    () => windows.find(w => w.id === effectiveId),
-    [windows, effectiveId]
-  );
 
   // Terminal service URL - proxied by Nginx to ttyd:7681
   const terminalUrl = '/terminal/';
-
-  // Calculate center position if not provided
-  const defaultPosition = useMemo(() => {
-    if (initialPosition) return initialPosition;
-    if (currentWindow?.position) return currentWindow.position;
-
-    // Center of viewport
-    const screenWidth = typeof window !== 'undefined' ? window.innerWidth : 1024;
-    const screenHeight = typeof window !== 'undefined' ? window.innerHeight : 768;
-    const windowWidth = initialSize?.width || 800;
-    const windowHeight = initialSize?.height || 600;
-
-    return {
-      x: Math.max(0, (screenWidth - windowWidth) / 2),
-      y: Math.max(0, (screenHeight - windowHeight) / 2),
-    };
-  }, [initialPosition, currentWindow, initialSize]);
 
   return (
     <Window
       id={effectiveId}
       title={title}
-      initialPosition={defaultPosition}
-      initialSize={initialSize || { width: 800, height: 600 }}
+      icon={icon}
       {...props}
     >
       <div className="terminal-container">

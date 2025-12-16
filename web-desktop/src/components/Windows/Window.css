@@ -41,6 +41,11 @@
   flex-shrink: 0;
 }
 
+/* Draggable area - enables react-rnd drag functionality */
+.window-titlebar-drag {
+  cursor: move;
+}
+
 /* macOS-style controls (left side) */
 .window-controls-left {
   display: flex;

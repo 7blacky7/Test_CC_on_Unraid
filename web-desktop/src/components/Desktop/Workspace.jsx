@@ -24,8 +24,9 @@ const Workspace = () => {
   /**
    * Get workspace bounds for constraining window dragging/resizing
    * Returns dimensions in pixels: { top, left, bottom, right, width, height }
+   * Memoized to prevent unnecessary re-renders - only recalculate if ref changes
    */
-  const getWorkspaceBounds = useCallback(() => {
+  const workspaceBounds = React.useMemo(() => {
     if (!workspaceRef.current) {
       return { top: 0, left: 0, bottom: window.innerHeight, right: window.innerWidth, width: window.innerWidth, height: window.innerHeight };
     }
@@ -41,7 +42,7 @@ const Workspace = () => {
       maxX: rect.width - 100, // Minimum window width constraint
       maxY: rect.height - 50, // Minimum window height constraint
     };
-  }, []);
+  }, []); // Only calculate once after mount
 
   /**
    * Handle workspace click to focus windows
@@ -68,25 +69,30 @@ const Workspace = () => {
    * Render the appropriate window component based on window type
    */
   const renderWindow = useCallback((windowData) => {
+    const { id, type, title, icon, position, size, isFocused, zIndex, isMinimized } = windowData;
+
     const commonProps = {
-      key: windowData.id,
-      workspaceBounds: getWorkspaceBounds(),
-      isFocused: windowData.isFocused,
-      zIndex: windowData.zIndex,
-      ...windowData,
+      id,
+      title,
+      icon,
+      position,
+      size,
+      isFocused,
+      zIndex,
+      workspaceBounds,
     };
 
-    switch (windowData.type) {
+    switch (type) {
       case 'terminal':
-        return <TerminalWindow {...commonProps} />;
+        return <TerminalWindow key={id} {...commonProps} />;
       case 'browser':
-        return <BrowserWindow {...commonProps} />;
+        return <BrowserWindow key={id} {...commonProps} />;
       case 'files':
-        return <FileExplorer {...commonProps} />;
+        return <FileExplorer key={id} {...commonProps} />;
       default:
-        return <Window {...commonProps} />;
+        return <Window key={id} {...commonProps} />;
     }
-  }, [getWorkspaceBounds]);
+  }, [workspaceBounds]);
 
   return (
     <div

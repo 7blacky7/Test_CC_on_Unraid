@@ -15,8 +15,7 @@ const BrowserWindow = ({
   windowId,
   id,
   title = 'Browser - Playwright',
-  initialPosition = { x: 200, y: 150 },
-  initialSize = { width: 1280, height: 720 },
+  icon = 'language',
   ...props
 }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -36,8 +35,7 @@ const BrowserWindow = ({
     <Window
       id={resolvedWindowId}
       title={title}
-      initialPosition={initialPosition}
-      initialSize={initialSize}
+      icon={icon}
       {...props}
     >
       <div className="browser-container">

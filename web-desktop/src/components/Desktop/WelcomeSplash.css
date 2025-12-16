@@ -6,7 +6,7 @@
 
 /* Main splash screen overlay */
 .welcome-splash {
-  @apply fixed inset-0 z-9999 flex flex-col items-center justify-center cursor-pointer overflow-hidden;
+  @apply fixed inset-0 z-50 flex flex-col items-center justify-center cursor-pointer overflow-hidden;
 }
 
 /* Background with dark gradient overlay */

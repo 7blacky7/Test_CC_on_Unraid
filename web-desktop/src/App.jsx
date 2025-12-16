@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Login from './pages/Login';
-import Desktop from './pages/Desktop';
+import Desktop from './components/Desktop/Desktop';
 import './App.css';
 
 function App() {
