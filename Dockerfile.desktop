@@ -1,0 +1,123 @@
+FROM node:20-bullseye
+
+# System dependencies installieren (inklusive VNC + Desktop Komponenten)
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    wget \
+    sudo \
+    vim \
+    nano \
+    build-essential \
+    python3 \
+    python3-pip \
+    # Für ttyd (Web Terminal)
+    libwebsockets-dev \
+    libjson-c-dev \
+    libssl-dev \
+    cmake \
+    # Playwright Dependencies
+    libnss3 \
+    libnspr4 \
+    libatk1.0-0 \
+    libatk-bridge2.0-0 \
+    libcups2 \
+    libdrm2 \
+    libxkbcommon0 \
+    libxcomposite1 \
+    libxdamage1 \
+    libxfixes3 \
+    libxrandr2 \
+    libgbm1 \
+    libasound2 \
+    libpango-1.0-0 \
+    libcairo2 \
+    # X11 + VNC Server
+    xvfb \
+    x11vnc \
+    fluxbox \
+    net-tools \
+    # Supervisor für Process Management
+    supervisor \
+    # Nginx für Reverse Proxy
+    nginx \
+    && rm -rf /var/lib/apt/lists/*
+
+# ttyd installieren (Web Terminal)
+RUN cd /tmp && \
+    git clone https://github.com/tsl0922/ttyd.git && \
+    cd ttyd && mkdir build && cd build && \
+    cmake .. && \
+    make && make install && \
+    cd / && rm -rf /tmp/ttyd
+
+# noVNC installieren (VNC Client im Browser)
+RUN git clone https://github.com/novnc/noVNC.git /opt/noVNC && \
+    git clone https://github.com/novnc/websockify.git /opt/noVNC/utils/websockify && \
+    ln -s /opt/noVNC/vnc.html /opt/noVNC/index.html
+
+# Claude Code installieren
+RUN curl -fsSL https://claude.ai/install.sh | bash && \
+    # Binary nach /usr/local/bin kopieren (nicht symlinken!)
+    # Damit alle User (auch claude) es nutzen können
+    cp /root/.local/share/claude/versions/*/[0-9]* /usr/local/bin/claude 2>/dev/null || \
+    cp /root/.local/share/claude/versions/* /usr/local/bin/claude && \
+    chmod +x /usr/local/bin/claude
+
+# Playwright installieren mit allen Browsern (global für alle User)
+RUN npm install -g playwright && \
+    mkdir -p /usr/local/share/playwright && \
+    PLAYWRIGHT_BROWSERS_PATH=/usr/local/share/playwright npx playwright install --with-deps chromium firefox webkit && \
+    PLAYWRIGHT_BROWSERS_PATH=/usr/local/share/playwright npx playwright install chrome && \
+    chmod -R 755 /usr/local/share/playwright && \
+    echo 'export PLAYWRIGHT_BROWSERS_PATH=/usr/local/share/playwright' >> /etc/profile.d/playwright.sh && \
+    chmod +r /etc/profile.d/playwright.sh
+
+# User für Claude Code erstellen (VOR dem Arbeitsverzeichnis!)
+RUN useradd -m -s /bin/bash claude && \
+    echo "claude ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+
+# Arbeitsverzeichnis und Skills erstellen
+RUN mkdir -p /workspace && chown claude:claude /workspace
+RUN mkdir -p /home/claude/.config && chown -R claude:claude /home/claude
+RUN mkdir -p /home/claude/.claude/skills && chown -R claude:claude /home/claude/.claude
+
+# Playwright Skills kopieren
+COPY skills/ /home/claude/.claude/skills/
+RUN chown -R claude:claude /home/claude/.claude/skills && \
+    find /home/claude/.claude/skills -name "*.sh" -exec chmod +x {} \; && \
+    find /home/claude/.claude/skills -name "*.js" -exec chmod +x {} \;
+
+# Wrapper-Script für claude mit Cache-Cleanup
+RUN echo '#!/bin/bash' > /usr/local/bin/claude-clean && \
+    echo 'rm -rf ~/.cache/ms-playwright/mcp-chrome-* 2>/dev/null' >> /usr/local/bin/claude-clean && \
+    echo 'exec /usr/local/bin/claude "$@"' >> /usr/local/bin/claude-clean && \
+    chmod +x /usr/local/bin/claude-clean && \
+    echo 'alias claude="claude-clean"' >> /home/claude/.bashrc && \
+    echo 'export PLAYWRIGHT_BROWSERS_PATH=/usr/local/share/playwright' >> /home/claude/.bashrc && \
+    echo 'export PATH="/home/claude/.claude/skills:$PATH"' >> /home/claude/.bashrc && \
+    echo 'export DISPLAY=:99' >> /home/claude/.bashrc
+
+# Backend API Verzeichnis erstellen
+RUN mkdir -p /app/backend && mkdir -p /app/web-desktop
+
+# Nginx Config entfernen (wird durch Volume gemountet)
+RUN rm /etc/nginx/sites-enabled/default
+
+WORKDIR /workspace
+
+# Ports
+EXPOSE 3000
+EXPOSE 7681
+EXPOSE 6080
+EXPOSE 8080
+
+# Supervisor Config und Startup Script
+COPY supervisor.conf /etc/supervisor/conf.d/supervisor.conf
+COPY nginx.conf /etc/nginx/sites-enabled/default
+COPY backend/ /app/backend/
+COPY entrypoint.desktop.sh /entrypoint.sh
+
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
