@@ -67,15 +67,8 @@ const LoginScreen = () => {
             </span>
             <span>System Ready</span>
           </div>
-          <span>ID: #A1B2C3</span>
         </div>
-        <div className="flex items-center gap-6 hidden sm:flex">
-          <span className="flex items-center gap-2">
-            <span className="material-symbols-outlined text-[16px]">wifi</span> dev-net-5g
-          </span>
-          <span className="flex items-center gap-2">
-            <span className="material-symbols-outlined text-[16px]">battery_full</span> 100%
-          </span>
+        <div className="flex items-center gap-6">
           <span className="text-white/80">{getCurrentDateTime()}</span>
         </div>
       </div>
@@ -162,16 +155,6 @@ const LoginScreen = () => {
                 arrow_forward
               </span>
             </button>
-
-            {/* Links */}
-            <div className="flex justify-between items-center mt-2 px-1">
-              <a className="text-xs text-white/40 hover:text-white transition-colors" href="#">
-                Forgot password?
-              </a>
-              <a className="text-xs text-white/40 hover:text-white transition-colors flex items-center gap-1" href="#">
-                <span className="material-symbols-outlined text-[14px]">token</span> Token Login
-              </a>
-            </div>
           </form>
         </div>
       </div>
@@ -188,12 +171,6 @@ const LoginScreen = () => {
           <span className="material-symbols-outlined">restart_alt</span>
           <span className="absolute -top-10 bg-black text-white text-[10px] py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity border border-white/10 whitespace-nowrap">
             Restart
-          </span>
-        </button>
-        <button className="group relative h-12 w-12 rounded-full glass flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 hover:scale-110 transition-all duration-300">
-          <span className="material-symbols-outlined">settings</span>
-          <span className="absolute -top-10 bg-black text-white text-[10px] py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity border border-white/10 whitespace-nowrap">
-            Settings
           </span>
         </button>
       </div>
