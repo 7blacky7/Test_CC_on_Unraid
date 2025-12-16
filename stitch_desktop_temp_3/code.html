@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html class="dark"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DockerOS Desktop - Dark Theme</title>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#E0E0E0","accent": "#6366f1","background-dark": "#0f0f11","surface-dark": "#18181b","surface-darker": "#131315","border-dark": "#27272a","text-main": "#e4e4e7",
+                        "text-muted": "#a1a1aa",
+                    },
+                    fontFamily: {
+                        "display": ["Spline Sans", "sans-serif"],
+                        "mono": ["ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "Liberation Mono", "Courier New", "monospace"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem", 
+                        "lg": "1.5rem", 
+                        "xl": "2rem", 
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>.custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent; 
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #3f3f46; 
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #52525b; 
+        }.glass-panel-dark {
+            background: rgba(24, 24, 27, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+    </style>
+</head>
+<body class="bg-background-dark text-text-main font-display overflow-hidden h-screen flex flex-col relative selection:bg-accent selection:text-white">
+<div class="absolute inset-0 z-0 opacity-20 pointer-events-none" style="background-image: radial-gradient(#52525b 1px, transparent 1px); background-size: 32px 32px;"></div>
+<div class="absolute inset-0 z-0 bg-gradient-to-br from-indigo-900/10 via-background-dark to-purple-900/10 pointer-events-none"></div>
+<header class="relative z-50 flex items-center justify-between whitespace-nowrap bg-surface-dark/90 backdrop-blur-md border-b border-border-dark px-6 py-2 shadow-lg">
+<div class="flex items-center gap-4">
+<div class="flex items-center justify-center size-8 rounded-lg bg-white text-black shadow-[0_0_10px_rgba(255,255,255,0.2)]">
+<span class="material-symbols-outlined text-[20px]">terminal</span>
+</div>
+<h2 class="text-text-main text-lg font-bold leading-tight tracking-[-0.015em]">DockerOS</h2>
+</div>
+<div class="flex gap-3 items-center">
+<div class="hidden sm:flex items-center justify-center overflow-hidden rounded-full h-8 px-4 bg-surface-darker border border-border-dark text-text-main text-xs font-bold leading-normal tracking-[0.015em] shadow-inner">
+<span class="truncate">12:45 PM</span>
+</div>
+<div class="flex items-center gap-2 bg-surface-darker border border-border-dark rounded-full p-1 h-8">
+<div class="flex items-center justify-center size-6 rounded-full bg-accent shadow-sm text-white">
+<span class="material-symbols-outlined text-[14px]">wifi</span>
+</div>
+<div class="flex items-center justify-center size-6 rounded-full text-text-muted hover:text-text-main transition-colors">
+<span class="material-symbols-outlined text-[14px]">battery_full</span>
+</div>
+<div class="flex items-center justify-center size-6 rounded-full text-text-muted hover:text-text-main transition-colors">
+<span class="material-symbols-outlined text-[14px]">memory</span>
+</div>
+</div>
+<button class="flex items-center justify-center overflow-hidden rounded-full h-8 w-8 bg-surface-darker border border-border-dark text-text-muted hover:text-white hover:bg-accent transition-all">
+<span class="material-symbols-outlined text-[20px]">account_circle</span>
+</button>
+</div>
+</header>
+<main class="relative z-10 flex-1 w-full overflow-hidden p-4 sm:p-8 flex flex-col lg:flex-row items-center lg:items-start justify-center gap-6 lg:gap-8">
+<section class="flex flex-col w-full max-w-[640px] h-[400px] lg:h-[600px] rounded-xl shadow-2xl shadow-black/50 border border-border-dark bg-[#0e0e0e] overflow-hidden transition-transform hover:scale-[1.005] duration-300 ring-1 ring-white/5">
+<div class="flex items-center justify-between px-4 py-3 bg-[#1c1c1c] border-b border-border-dark">
+<div class="flex gap-2">
+<div class="size-3 rounded-full bg-[#FF5F56] hover:bg-[#ff3b30] transition-colors"></div>
+<div class="size-3 rounded-full bg-[#FFBD2E] hover:bg-[#ffcc00] transition-colors"></div>
+<div class="size-3 rounded-full bg-[#27C93F] hover:bg-[#34c759] transition-colors"></div>
+</div>
+<div class="flex items-center gap-2 text-text-muted text-sm font-medium">
+<span class="material-symbols-outlined text-[16px]">terminal</span>
+<span>user@docker-dev:~</span>
+</div>
+<div class="w-10"></div>
+</div>
+<div class="flex items-center bg-[#181818] border-b border-border-dark">
+<div class="px-4 py-2 text-sm text-white border-b-2 border-accent bg-[#222] flex items-center gap-2">
+<span>node: test</span>
+<span class="material-symbols-outlined text-[12px] hover:text-white cursor-pointer text-gray-500 hover:bg-white/10 rounded-sm">close</span>
+</div>
+<div class="px-4 py-2 text-sm text-gray-500 hover:text-gray-300 hover:bg-[#222] cursor-pointer flex items-center gap-2 transition-colors">
+<span>bash</span>
+</div>
+<div class="px-3 text-gray-500 hover:text-white cursor-pointer">
+<span class="material-symbols-outlined text-[16px]">add</span>
+</div>
+</div>
+<div class="flex-1 p-4 font-mono text-sm overflow-y-auto custom-scrollbar text-gray-300 bg-[#0e0e0e]">
+<div class="mb-2">
+<span class="text-[#27C93F]">➜</span> <span class="text-[#569CD6]">~</span> <span class="text-gray-400">cd</span> projects/docker-os
+                </div>
+<div class="mb-2">
+<span class="text-[#27C93F]">➜</span> <span class="text-[#569CD6]">docker-os</span> <span class="text-[#E06C75]">git:(</span><span class="text-[#FFBD2E]">main</span><span class="text-[#E06C75]">)</span> npm run test:e2e
+                </div>
+<div class="mb-4 text-gray-500">
+                    &gt; docker-os@1.0.0 test:e2e<br/>
+                    &gt; playwright test
+                </div>
+<div class="mb-2">
+<span class="text-white font-semibold">Running 5 tests using 2 workers</span>
+</div>
+<div class="mb-1">
+<span class="text-[#27C93F]">✓ [1/5]</span> passed: login.spec.ts <span class="text-gray-500">(2.4s)</span>
+</div>
+<div class="mb-1">
+<span class="text-[#27C93F]">✓ [2/5]</span> passed: dashboard.spec.ts <span class="text-gray-500">(3.1s)</span>
+</div>
+<div class="mb-1">
+<span class="text-[#27C93F]">✓ [3/5]</span> passed: settings.spec.ts <span class="text-gray-500">(1.8s)</span>
+</div>
+<div class="mb-1 text-accent flex items-center gap-2">
+<span class="animate-pulse">●</span> [4/5] running: browser-integration.spec.ts...
+                </div>
+<div class="mt-4">
+<span class="inline-block w-2.5 h-5 bg-gray-500 animate-pulse align-middle"></span>
+</div>
+</div>
+</section>
+<section class="flex flex-col w-full max-w-[640px] h-[400px] lg:h-[600px] rounded-xl shadow-2xl shadow-black/50 bg-surface-dark overflow-hidden transition-transform hover:scale-[1.005] duration-300 border border-border-dark ring-1 ring-white/5">
+<div class="flex flex-col bg-surface-darker border-b border-border-dark">
+<div class="flex items-center justify-between px-4 py-2">
+<div class="flex gap-2">
+<div class="size-3 rounded-full bg-[#FF5F56]"></div>
+<div class="size-3 rounded-full bg-[#FFBD2E]"></div>
+<div class="size-3 rounded-full bg-[#27C93F]"></div>
+</div>
+<div class="flex-1 max-w-sm mx-4 bg-surface-dark rounded-t-lg px-3 py-1.5 text-xs font-medium text-text-main shadow-sm flex items-center justify-between border-x border-t border-border-dark relative">
+<div class="absolute bottom-0 left-0 right-0 h-[2px] bg-accent z-10"></div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[14px] text-accent">public</span>
+                            DockerOS Dashboard
+                        </div>
+<span class="material-symbols-outlined text-[12px] text-text-muted cursor-pointer hover:text-white hover:bg-white/10 rounded-sm">close</span>
+</div>
+<div class="w-14"></div>
+</div>
+<div class="flex items-center gap-3 px-4 py-2 border-t border-border-dark bg-surface-dark">
+<div class="flex gap-1 text-text-muted">
+<button class="hover:bg-white/5 rounded p-1 transition-colors"><span class="material-symbols-outlined text-[18px]">arrow_back</span></button>
+<button class="hover:bg-white/5 rounded p-1 transition-colors"><span class="material-symbols-outlined text-[18px]">arrow_forward</span></button>
+<button class="hover:bg-white/5 rounded p-1 transition-colors"><span class="material-symbols-outlined text-[18px]">refresh</span></button>
+</div>
+<div class="flex-1 bg-[#09090b] border border-border-dark hover:border-gray-600 transition-colors rounded-full h-8 px-4 flex items-center gap-2 text-sm text-text-muted group focus-within:ring-2 focus-within:ring-accent/50 focus-within:border-accent">
+<span class="material-symbols-outlined text-[16px] text-emerald-500">lock</span>
+<span class="group-hover:text-text-main transition-colors">localhost:3000/dashboard</span>
+</div>
+<button class="hover:bg-white/5 rounded p-1 text-accent transition-colors"><span class="material-symbols-outlined text-[20px]">star</span></button>
+</div>
+</div>
+<div class="flex-1 bg-[#121214] overflow-y-auto relative custom-scrollbar">
+<div class="p-8 text-text-main">
+<div class="flex items-center justify-between mb-8">
+<h1 class="text-3xl font-bold tracking-tight text-white">Dashboard</h1>
+<button class="bg-accent hover:bg-indigo-500 text-white px-4 py-2 rounded-lg text-sm font-bold shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/30 transition-all">Create New</button>
+</div>
+<div class="grid grid-cols-2 gap-4 mb-8">
+<div class="p-4 rounded-xl border border-border-dark bg-[#1c1c1f] shadow-sm">
+<div class="text-text-muted text-xs font-semibold uppercase tracking-wider mb-1">Total Users</div>
+<div class="text-3xl font-bold text-white">24.5k</div>
+<div class="text-emerald-400 text-xs font-medium mt-1 flex items-center">
+<span class="material-symbols-outlined text-[14px] mr-1">trending_up</span> +12% this week
+                            </div>
+</div>
+<div class="p-4 rounded-xl border border-border-dark bg-[#1c1c1f] shadow-sm">
+<div class="text-text-muted text-xs font-semibold uppercase tracking-wider mb-1">Active Containers</div>
+<div class="text-3xl font-bold text-white">8</div>
+<div class="text-blue-400 text-xs font-medium mt-1 flex items-center">
+<span class="material-symbols-outlined text-[14px] mr-1">dns</span> All systems operational
+                            </div>
+</div>
+</div>
+<div class="w-full aspect-[2/1] rounded-xl bg-[#1c1c1f] border border-border-dark p-4 mb-8 flex flex-col justify-between">
+<div class="flex justify-between items-center">
+<div class="h-4 w-32 bg-white/10 rounded animate-pulse"></div>
+<div class="h-8 w-24 bg-white/5 rounded-lg border border-white/5"></div>
+</div>
+<div class="flex items-end gap-2 h-32 pt-4">
+<div class="w-full bg-accent/20 rounded-t-sm h-[40%] hover:bg-accent/30 transition-colors"></div>
+<div class="w-full bg-accent/40 rounded-t-sm h-[60%] hover:bg-accent/50 transition-colors"></div>
+<div class="w-full bg-accent/30 rounded-t-sm h-[30%] hover:bg-accent/40 transition-colors"></div>
+<div class="w-full bg-accent/90 rounded-t-sm h-[80%] hover:bg-accent transition-colors shadow-[0_0_15px_rgba(99,102,241,0.4)]"></div>
+<div class="w-full bg-accent/50 rounded-t-sm h-[50%] hover:bg-accent/60 transition-colors"></div>
+<div class="w-full bg-accent rounded-t-sm h-[90%] hover:bg-indigo-400 transition-colors"></div>
+</div>
+</div>
+<div class="flex flex-col gap-4">
+<div class="text-sm font-bold text-gray-200">Recent Deployments</div>
+<div class="flex items-center gap-4 p-3 hover:bg-white/5 rounded-xl transition-colors cursor-pointer border border-transparent hover:border-white/10">
+<div class="size-10 rounded-lg bg-cover bg-center ring-1 ring-white/10" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC_efZ-_R9EbtXb5Ak6ROCEfPR1OflZolL0TZ6kdxiSt75uFq-Yv7VqfWneS16vzDkZQ4ZRsNSuc7ynQK7TwQ2JLjqNZzq3mS1q1QfpgHXegvfRJGWVSpFEKutwcLhhdOk7Bh0PFuIevpaJ_2VcsrbpjEpohOAN9SsCgLt-gOjGELlbzEAQdue0-s1UK4N8wRcit1H68Fs8uYVQWHwgMEvtKIBSnL6hvr0z3_hIW__zXj3zZXEg13MsedKunP1kasjJuw6Uo-BPy8e3');"></div>
+<div class="flex-1">
+<div class="text-sm font-bold text-gray-200">Frontend V2.1</div>
+<div class="text-xs text-gray-500">Updated 2m ago</div>
+</div>
+<div class="px-2 py-1 bg-emerald-500/20 text-emerald-400 border border-emerald-500/20 text-xs rounded-md font-bold">Live</div>
+</div>
+<div class="flex items-center gap-4 p-3 hover:bg-white/5 rounded-xl transition-colors cursor-pointer border border-transparent hover:border-white/10">
+<div class="size-10 rounded-lg bg-cover bg-center ring-1 ring-white/10" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAfD1XOkDJalLV0klBRldbOlziSK0_TRQWL5rpyGwDWEz_hAXRg8ZxD_m8lee7UYjx2NSbsM6j62YudBdPjy0_Or0A2S0pH3djoBoV1qNKYVEz-VBDkd6bkdtuUzWl4o_Qj_TAbqPhtuJdBHgtnhlC9B18vDJAGORjmp1G2QqeuMMelWFmKj5GcvuPiRoHZfL0MgsZqNnMB7OHNIZn4Khjh9UlXVfuJqOy5W9aGiYUAkyiDeHEqrZbWHSSBu-sBmtYXMPvFOkTX5mfE');"></div>
+<div class="flex-1">
+<div class="text-sm font-bold text-gray-200">Postgres Replica</div>
+<div class="text-xs text-gray-500">Updated 1h ago</div>
+</div>
+<div class="px-2 py-1 bg-amber-500/20 text-amber-400 border border-amber-500/20 text-xs rounded-md font-bold">Syncing</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50">
+<div class="glass-panel-dark rounded-2xl px-4 py-3 flex items-end gap-3 transition-all hover:scale-105 duration-300 shadow-[0_20px_40px_rgba(0,0,0,0.6)] border-t border-white/10">
+<div class="group relative flex flex-col items-center gap-1 cursor-pointer">
+<div class="size-12 rounded-xl bg-gradient-to-b from-blue-500 to-blue-700 flex items-center justify-center text-white shadow-lg shadow-blue-900/40 transition-all duration-200 group-hover:-translate-y-3 group-hover:scale-110 border border-white/10">
+<span class="material-symbols-outlined text-[28px]">folder_open</span>
+</div>
+<div class="w-1 h-1 rounded-full bg-transparent mt-1"></div>
+<span class="absolute -top-12 bg-surface-darker border border-border-dark text-white text-xs px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-all whitespace-nowrap pointer-events-none shadow-xl transform translate-y-2 group-hover:translate-y-0">Finder</span>
+</div>
+<div class="group relative flex flex-col items-center gap-1 cursor-pointer">
+<div class="size-12 rounded-xl bg-[#1a1a1a] border border-white/10 flex items-center justify-center text-white shadow-lg transition-all duration-200 group-hover:-translate-y-3 group-hover:scale-110 relative">
+<div class="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent rounded-xl"></div>
+<span class="material-symbols-outlined text-[28px]">terminal</span>
+</div>
+<div class="w-1.5 h-1.5 rounded-full bg-white mt-1 shadow-[0_0_8px_rgba(255,255,255,0.8)]"></div>
+<span class="absolute -top-12 bg-surface-darker border border-border-dark text-white text-xs px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-all whitespace-nowrap pointer-events-none shadow-xl transform translate-y-2 group-hover:translate-y-0">Terminal</span>
+</div>
+<div class="group relative flex flex-col items-center gap-1 cursor-pointer">
+<div class="size-12 rounded-xl bg-[#0065A9] flex items-center justify-center text-white shadow-lg shadow-blue-900/30 transition-all duration-200 group-hover:-translate-y-3 group-hover:scale-110 relative overflow-hidden border border-white/10">
+<div class="absolute inset-0 bg-gradient-to-tr from-[#003c65] to-transparent opacity-60"></div>
+<span class="material-symbols-outlined text-[28px] relative z-10">code</span>
+</div>
+<div class="w-1 h-1 rounded-full bg-transparent mt-1"></div>
+<span class="absolute -top-12 bg-surface-darker border border-border-dark text-white text-xs px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-all whitespace-nowrap pointer-events-none shadow-xl transform translate-y-2 group-hover:translate-y-0">Code</span>
+</div>
+<div class="group relative flex flex-col items-center gap-1 cursor-pointer">
+<div class="size-12 rounded-xl bg-[#202023] flex items-center justify-center text-white shadow-lg transition-all duration-200 group-hover:-translate-y-3 group-hover:scale-110 border border-white/10">
+<div class="size-8 rounded-full bg-gradient-to-tr from-orange-400 to-red-600 flex items-center justify-center shadow-inner">
+<div class="size-3.5 rounded-full bg-white shadow-sm"></div>
+</div>
+</div>
+<div class="w-1.5 h-1.5 rounded-full bg-white mt-1 shadow-[0_0_8px_rgba(255,255,255,0.8)]"></div>
+<span class="absolute -top-12 bg-surface-darker border border-border-dark text-white text-xs px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-all whitespace-nowrap pointer-events-none shadow-xl transform translate-y-2 group-hover:translate-y-0">Browser</span>
+</div>
+<div class="group relative flex flex-col items-center gap-1 cursor-pointer">
+<div class="size-12 rounded-xl bg-[#3f3f46] flex items-center justify-center text-gray-300 shadow-lg transition-all duration-200 group-hover:-translate-y-3 group-hover:scale-110 border border-white/10">
+<span class="material-symbols-outlined text-[28px]">settings</span>
+</div>
+<div class="w-1 h-1 rounded-full bg-transparent mt-1"></div>
+<span class="absolute -top-12 bg-surface-darker border border-border-dark text-white text-xs px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-all whitespace-nowrap pointer-events-none shadow-xl transform translate-y-2 group-hover:translate-y-0">Settings</span>
+</div>
+</div>
+</div>
+
+</body></html>

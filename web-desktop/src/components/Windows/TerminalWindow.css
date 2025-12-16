@@ -1,0 +1,62 @@
+/* Terminal Window Component Styles */
+
+/**
+ * Terminal Container
+ * Main container for the terminal iframe
+ * Ensures proper sizing and responsive behavior
+ */
+.terminal-container {
+  width: 100%;
+  height: 100%;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+/**
+ * Terminal IFrame
+ * Seamless integration with no borders
+ * Fills the entire content area responsively
+ * Allows clipboard operations for terminal functionality
+ */
+.terminal-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+  background: #000;
+  border-radius: 0;
+  margin: 0;
+  padding: 0;
+}
+
+/**
+ * Ensure proper rendering in different states
+ * Maintain terminal appearance when window is maximized or resized
+ */
+.terminal-iframe:focus {
+  outline: none;
+}
+
+/* Smooth transitions for terminal window interactions */
+.terminal-container,
+.terminal-iframe {
+  transition: opacity 0.2s ease;
+}
+
+/* Responsive behavior for very small containers */
+@media (max-width: 400px) {
+  .terminal-container {
+    font-size: 12px;
+  }
+}
+
+/* Ensure terminal content stays within bounds */
+.window.maximized .terminal-container,
+.window.maximized .terminal-iframe {
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+}

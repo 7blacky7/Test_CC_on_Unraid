@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DockerDev OS - Desktop</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "#d4ff00", // Modern Acid Lime
+                    "primary-dim": "#a3c200",
+                    "background": "#0a0a0a", // Deep Black
+                    "surface": "#171717", // Dark Gray
+                    "surface-lighter": "#262626", // Lighter Gray for borders/hovers
+                    "border": "#333333",
+                },
+                fontFamily: {
+                    "display": ["Spline Sans", "sans-serif"],
+                    "mono": ["JetBrains Mono", "monospace"],
+                },
+                borderRadius: {"DEFAULT": "0.75rem", "lg": "1.5rem", "xl": "2.5rem", "full": "9999px"},
+                animation: {
+                    "pulse-fast": "pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+                }
+            },
+        },
+    }
+</script>
+<style>.terminal-scroll::-webkit-scrollbar {
+        width: 10px;
+    }
+    .terminal-scroll::-webkit-scrollbar-track {
+        background: #171717;
+    }
+    .terminal-scroll::-webkit-scrollbar-thumb {
+        background-color: #333;
+        border-radius: 5px;
+        border: 2px solid #171717;
+    }
+    .terminal-scroll::-webkit-scrollbar-thumb:hover {
+        background-color: #444;
+    }
+    .blinking-cursor {
+        animation: blink 1s step-end infinite;
+    }
+    @keyframes blink {
+        50% { opacity: 0; }
+    }
+</style>
+</head>
+<body class="bg-background text-gray-300 font-display antialiased overflow-hidden h-screen w-screen selection:bg-primary selection:text-black">
+<div class="relative flex h-full w-full flex-col">
+<div class="absolute inset-0 z-0 opacity-20 pointer-events-none" style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 32px 32px;">
+</div>
+<header class="relative z-50 flex items-center justify-between border-b border-border bg-surface/80 px-6 py-2 backdrop-blur-xl">
+<div class="flex items-center gap-4">
+<div class="flex items-center justify-center size-8 rounded-lg bg-white/10 text-primary border border-white/5">
+<span class="material-symbols-outlined text-[20px]">terminal</span>
+</div>
+<h2 class="text-sm font-bold tracking-tight text-white">DockerDev OS</h2>
+</div>
+<div class="flex flex-1 justify-end gap-6 items-center">
+<div class="hidden md:flex items-center gap-6 text-xs font-medium text-gray-400">
+<div class="flex items-center gap-1.5 hover:text-white transition-colors cursor-default">
+<span class="material-symbols-outlined text-[16px]">memory</span>
+<span>CPU: 12%</span>
+</div>
+<div class="flex items-center gap-1.5 hover:text-white transition-colors cursor-default">
+<span class="material-symbols-outlined text-[16px]">sd_card</span>
+<span>RAM: 4.2GB</span>
+</div>
+<div class="flex items-center gap-1.5 hover:text-white transition-colors cursor-default">
+<div class="size-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]"></div>
+<span>Container: Running</span>
+</div>
+</div>
+<div class="flex items-center gap-3 pl-4 border-l border-white/10">
+<button class="flex items-center justify-center h-8 px-3 gap-2 bg-surface-lighter rounded-full text-white text-xs font-medium hover:bg-white/10 border border-white/5 transition-all">
+<div class="size-5 rounded-full bg-gradient-to-tr from-blue-500 to-purple-500 overflow-hidden">
+<img alt="User profile avatar" class="w-full h-full object-cover opacity-80" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEC83adV_GCqbq4ESqn-J-j2Jke2gu1ehtcgheU4iXnH8bqfbc_Wu_lPeOQ23afQzowo-3tZ5JgxnnCewSpyxJkVRBAajPpaJ1BUnpK7TJv7jcnQFoIR52Z-h9c57WZOiFiDFDDyab1VN38ieMkopS0lSJKr0cPUvsEKdiI8PSe-zE3iEollCnWamEgwySaMWEejXZFNfHEzbSmSFJcPYnFgKUHxXDbU39RztdsmL04DgZTlifarIdIeSBnd0sKJGssApLZQkAnWXV"/>
+</div>
+<span class="hidden sm:inline">j_doe</span>
+</button>
+<div class="flex gap-1">
+<button class="size-8 flex items-center justify-center rounded-full hover:bg-white/10 text-gray-400 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[20px]">wifi</span>
+</button>
+<button class="size-8 flex items-center justify-center rounded-full hover:bg-white/10 text-gray-400 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[20px]">battery_full</span>
+</button>
+<button class="size-8 flex items-center justify-center rounded-full hover:bg-white/10 text-gray-400 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+</button>
+</div>
+<div class="text-xs font-semibold text-white ml-2">
+                10:42 AM
+            </div>
+</div>
+</div>
+</header>
+<main class="relative flex-1 flex items-center justify-center p-4 md:p-10 overflow-hidden">
+<div class="w-full max-w-5xl flex flex-col rounded-xl shadow-[0_0_50px_-12px_rgba(0,0,0,0.7)] bg-[#121212] border border-border overflow-hidden animate-in fade-in zoom-in-95 duration-300 ring-1 ring-white/5">
+<div class="flex items-center justify-between px-4 py-3 bg-surface border-b border-border select-none">
+<div class="flex gap-2 group">
+<button class="size-3 rounded-full bg-[#ff5f57] border border-[#ff5f57] hover:brightness-110 flex items-center justify-center text-black/40">
+<span class="opacity-0 group-hover:opacity-100 text-[8px] font-bold">✕</span>
+</button>
+<button class="size-3 rounded-full bg-[#febc2e] border border-[#febc2e] hover:brightness-110 flex items-center justify-center text-black/40">
+<span class="opacity-0 group-hover:opacity-100 text-[8px] font-bold">−</span>
+</button>
+<button class="size-3 rounded-full bg-[#28c840] border border-[#28c840] hover:brightness-110 flex items-center justify-center text-black/40">
+<span class="opacity-0 group-hover:opacity-100 text-[8px] font-bold">↗</span>
+</button>
+</div>
+<div class="flex items-center gap-2 text-gray-500 text-xs font-medium">
+<span class="material-symbols-outlined text-[14px]">terminal</span>
+<span>user@docker-dev: ~/project/frontend</span>
+</div>
+<div class="w-14"></div> 
+</div>
+<div class="h-[550px] bg-[#0c0c0c] p-4 md:p-6 font-mono text-sm overflow-y-auto terminal-scroll text-gray-300 leading-relaxed">
+<div class="mb-6 opacity-60 hover:opacity-100 transition-opacity">
+<div class="flex items-center gap-2">
+<span class="text-primary">➜</span>
+<span class="text-blue-400 font-bold">~/project/frontend</span>
+<span class="text-gray-500">git:(<span class="text-red-400">main</span>)</span>
+</div>
+<div class="mt-1">
+<span class="text-gray-600">$</span> npm run test:unit
+                </div>
+<div class="mt-2 text-gray-400 pl-4 border-l border-gray-800">
+<div class="flex items-center gap-2"><span class="bg-green-500/10 text-green-400 px-1.5 py-0.5 rounded text-xs font-bold border border-green-500/20">PASS</span> src/components/Button.test.tsx</div>
+<div class="flex items-center gap-2 mt-1"><span class="bg-green-500/10 text-green-400 px-1.5 py-0.5 rounded text-xs font-bold border border-green-500/20">PASS</span> src/utils/format.test.ts</div>
+<div class="mt-2 text-xs text-gray-500">
+                        Test Suites: 2 passed, 2 total<br/>
+                        Tests:       12 passed, 12 total<br/>
+                        Snapshots:   0 total<br/>
+                        Time:        1.245 s
+                    </div>
+</div>
+</div>
+<div class="mb-2">
+<div class="flex items-center gap-2">
+<span class="text-primary">➜</span>
+<span class="text-blue-400 font-bold">~/project/frontend</span>
+<span class="text-gray-500">git:(<span class="text-yellow-400">feature/login</span>)</span>
+</div>
+<div class="mt-1 flex gap-2 items-center">
+<span class="text-gray-600">$</span>
+<span class="text-white">claude code <span class="text-primary-dim">'Refactor the login component'</span></span>
+</div>
+</div>
+<div class="pl-4 border-l-2 border-primary/30 my-6 animate-pulse-fast/50">
+<div class="text-gray-400 flex items-center gap-2">
+<span class="text-primary">❯</span> Analyzing file structure...
+                </div>
+<div class="text-gray-400 mt-2 flex items-center gap-2">
+<span class="text-primary">❯</span> Reading <span class="text-gray-300 underline decoration-gray-700 decoration-dotted underline-offset-4">src/components/Login.tsx</span>...
+                </div>
+<div class="text-gray-400 mt-2 flex items-center gap-2">
+<span class="text-primary">❯</span> Identifying dependencies...
+                </div>
+<div class="mt-4 p-4 bg-surface rounded-lg border border-border">
+<div class="text-primary font-bold mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">lightbulb</span>
+                        Refactoring Plan:
+                    </div>
+<ol class="list-decimal list-inside space-y-2 text-gray-300 text-xs sm:text-sm">
+<li>Extract form logic to custom <code class="bg-white/10 px-1.5 py-0.5 rounded text-primary-dim">useLoginForm</code> hook</li>
+<li>Update validation schema with <code class="bg-white/10 px-1.5 py-0.5 rounded text-primary-dim">zod</code></li>
+<li>Improve accessibility labels for screen readers</li>
+</ol>
+</div>
+<div class="mt-4 text-gray-400 flex items-center gap-2">
+<span class="text-primary">❯</span> Applying changes... <span class="text-emerald-400 font-bold">Done.</span>
+</div>
+<div class="mt-2 text-gray-400 flex items-center gap-2">
+<span class="text-primary">❯</span> Running lint check...
+                </div>
+</div>
+<div class="mt-4 flex items-center">
+<div class="flex items-center gap-2 mr-2">
+<span class="text-primary">➜</span>
+<span class="text-blue-400 font-bold">~/project/frontend</span>
+<span class="text-gray-500">git:(<span class="text-yellow-400">feature/login</span>)</span>
+<span class="text-red-500 text-xs ml-1">✗</span>
+</div>
+<span class="text-gray-600 mr-2">$</span>
+<span class="w-2.5 h-5 bg-primary block blinking-cursor shadow-[0_0_8px_rgba(212,255,0,0.5)]"></span>
+</div>
+</div>
+</div>
+</main>
+<div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-auto">
+<div class="flex items-end gap-2 p-2.5 rounded-2xl bg-surface/90 backdrop-blur-2xl border border-white/10 shadow-2xl shadow-black/50">
+<button class="group relative flex flex-col items-center justify-center p-2 rounded-xl hover:bg-white/10 transition-all duration-200 hover:-translate-y-2">
+<div class="size-10 rounded-lg bg-gradient-to-b from-sky-400 to-blue-600 flex items-center justify-center shadow-lg shadow-blue-500/20 ring-1 ring-white/10">
+<span class="material-symbols-outlined text-white text-[24px]">folder</span>
+</div>
+<div class="absolute -bottom-1.5 size-1 bg-gray-500 rounded-full opacity-0 group-hover:opacity-0 transition-opacity"></div>
+<span class="absolute -top-12 scale-0 group-hover:scale-100 transition-transform bg-[#1a1a1a] border border-white/10 text-white text-[10px] px-2 py-1 rounded-md shadow-xl pointer-events-none whitespace-nowrap">Finder</span>
+</button>
+<button class="group relative flex flex-col items-center justify-center p-2 rounded-xl hover:bg-white/10 transition-all duration-200 hover:-translate-y-2">
+<div class="size-10 rounded-lg bg-[#2d2d2d] flex items-center justify-center shadow-lg ring-1 ring-white/10 overflow-hidden relative">
+<div class="absolute inset-0 bg-gradient-to-tr from-orange-400/20 via-red-500/20 to-purple-600/20"></div>
+<span class="material-symbols-outlined text-gray-200 text-[24px] relative z-10">public</span>
+</div>
+<div class="absolute -bottom-1.5 size-1 bg-gray-500 rounded-full opacity-0"></div>
+<span class="absolute -top-12 scale-0 group-hover:scale-100 transition-transform bg-[#1a1a1a] border border-white/10 text-white text-[10px] px-2 py-1 rounded-md shadow-xl pointer-events-none whitespace-nowrap">Browser</span>
+</button>
+<button class="group relative flex flex-col items-center justify-center p-2 rounded-xl bg-white/5 border border-white/5 transition-all duration-200 -translate-y-2">
+<div class="size-10 rounded-lg bg-black flex items-center justify-center shadow-lg shadow-black/50 ring-1 ring-white/10">
+<span class="text-primary font-mono text-lg font-bold">_&gt;</span>
+</div>
+<div class="absolute -bottom-1.5 size-1 bg-primary rounded-full shadow-[0_0_6px_#d4ff00]"></div>
+<span class="absolute -top-12 bg-[#1a1a1a] border border-white/10 text-white text-[10px] px-2 py-1 rounded-md shadow-xl pointer-events-none whitespace-nowrap">Terminal</span>
+</button>
+<button class="group relative flex flex-col items-center justify-center p-2 rounded-xl hover:bg-white/10 transition-all duration-200 hover:-translate-y-2">
+<div class="size-10 rounded-lg bg-[#0065a3] flex items-center justify-center shadow-lg shadow-blue-600/10 ring-1 ring-white/10">
+<span class="material-symbols-outlined text-white text-[24px]">code</span>
+</div>
+<div class="absolute -bottom-1.5 size-1 bg-gray-500 rounded-full"></div>
+<span class="absolute -top-12 scale-0 group-hover:scale-100 transition-transform bg-[#1a1a1a] border border-white/10 text-white text-[10px] px-2 py-1 rounded-md shadow-xl pointer-events-none whitespace-nowrap">VS Code</span>
+</button>
+<div class="w-px h-8 bg-white/10 mx-1 mb-3"></div>
+<button class="group relative flex flex-col items-center justify-center p-2 rounded-xl hover:bg-white/10 transition-all duration-200 hover:-translate-y-2">
+<div class="size-10 rounded-lg bg-[#333] flex items-center justify-center shadow-lg ring-1 ring-white/10">
+<span class="material-symbols-outlined text-gray-400 text-[24px]">settings</span>
+</div>
+<span class="absolute -top-12 scale-0 group-hover:scale-100 transition-transform bg-[#1a1a1a] border border-white/10 text-white text-[10px] px-2 py-1 rounded-md shadow-xl pointer-events-none whitespace-nowrap">Settings</span>
+</button>
+</div>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,170 @@
+/* Window Container - Glass effect with shadow */
+.window-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: rgba(30, 30, 30, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+/* Focused state - Yellow glow effect */
+.window-focused {
+  box-shadow:
+    0 0 0 2px rgba(234, 179, 8, 0.5),
+    0 20px 60px rgba(0, 0, 0, 0.6),
+    0 0 40px rgba(234, 179, 8, 0.2);
+  border-color: rgba(234, 179, 8, 0.3);
+}
+
+/* Maximized state */
+.window-maximized {
+  border-radius: 0;
+}
+
+/* Title Bar */
+.window-titlebar {
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  background: rgba(50, 50, 50, 0.6);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  user-select: none;
+  flex-shrink: 0;
+}
+
+/* macOS-style controls (left side) */
+.window-controls-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 70px;
+}
+
+.window-control-btn {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  position: relative;
+  padding: 0;
+}
+
+/* Hide icons by default */
+.window-control-btn .material-symbols-outlined {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  font-size: 10px;
+  color: rgba(0, 0, 0, 0.8);
+  position: absolute;
+}
+
+/* Show icons on hover */
+.window-titlebar:hover .window-control-btn .material-symbols-outlined {
+  opacity: 1;
+}
+
+/* Close button - Red */
+.window-control-close {
+  background: #ff5f57;
+}
+
+.window-control-close:hover {
+  background: #ff3b30;
+  box-shadow: 0 0 8px rgba(255, 95, 87, 0.6);
+}
+
+/* Minimize button - Yellow */
+.window-control-minimize {
+  background: #ffbd2e;
+}
+
+.window-control-minimize:hover {
+  background: #ffaa00;
+  box-shadow: 0 0 8px rgba(255, 189, 46, 0.6);
+}
+
+/* Maximize button - Green */
+.window-control-maximize {
+  background: #28c840;
+}
+
+.window-control-maximize:hover {
+  background: #20a034;
+  box-shadow: 0 0 8px rgba(40, 200, 64, 0.6);
+}
+
+/* Title content - center, draggable */
+.window-title-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: move;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 0 12px;
+}
+
+.window-title-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 400px;
+}
+
+/* Right side spacer for symmetry */
+.window-controls-right {
+  width: 70px;
+}
+
+/* Content Area */
+.window-content {
+  flex: 1;
+  overflow: auto;
+  background: rgba(20, 20, 20, 0.4);
+  color: white;
+}
+
+/* Custom scrollbar for content */
+.window-content::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.window-content::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.window-content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+.window-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* React-rnd resize handles styling */
+.react-resizable-handle {
+  z-index: 1;
+}
+
+/* Enhance resize handle visibility on hover */
+.window-container:hover .react-resizable-handle {
+  opacity: 1;
+}

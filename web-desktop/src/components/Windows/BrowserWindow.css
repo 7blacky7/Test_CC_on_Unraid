@@ -1,0 +1,114 @@
+/* Browser Window Styles - noVNC iframe wrapper */
+
+.browser-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Responsive iframe */
+.browser-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+  background: #1a1a1a;
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* Hide iframe while loading */
+.browser-iframe.loading {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Show iframe when loaded */
+.browser-iframe.loaded {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Loading indicator overlay */
+.browser-loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  z-index: 10;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Spinner animation */
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid rgba(102, 126, 234, 0.2);
+  border-top-color: #667eea;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Loading text */
+.browser-loading p {
+  color: #999;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  margin: 0;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 1024px) {
+  .browser-container {
+    background: #1a1a1a;
+  }
+}
+
+/* Ensure iframe content is accessible */
+.browser-iframe:focus-visible {
+  outline: 2px solid #667eea;
+  outline-offset: -2px;
+}
+
+/* Print styles - hide loading indicator */
+@media print {
+  .browser-loading {
+    display: none;
+  }
+}

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DevEnvironment Login</title>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f9f506",
+                        "background-dark": "#0f0f12",
+                        "surface": "#18181b",
+                    },
+                    fontFamily: {
+                        "display": ["Spline Sans", "sans-serif"]
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-out',
+                        'slide-up': 'slideUp 0.5s ease-out',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        }
+                    }
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        @layer utilities {
+            .glass {
+                @apply bg-black/20 backdrop-blur-md border border-white/5 shadow-lg;
+            }
+            .glass-input {
+                @apply w-full bg-white/5 border border-white/10 rounded-lg h-12 px-4 text-white placeholder-white/30 focus:outline-none focus:bg-white/10 focus:border-white/30 focus:ring-1 focus:ring-white/20 transition-all duration-200;
+            }
+        }
+    </style>
+</head>
+<body class="bg-background-dark min-h-screen w-full flex flex-col font-display antialiased overflow-hidden relative selection:bg-primary selection:text-black">
+<div class="absolute inset-0 z-0">
+<div class="absolute inset-0 bg-[#050505]"></div>
+<div class="absolute inset-0 bg-cover bg-center opacity-30 mix-blend-overlay blur-[2px] scale-105" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC4Zybcv6kQn_G_gj1_CVEaz42uZvG-aHBSR2POe344iRTOSYoeyOfqtErefY4RGGxjH5zUMcyyUBHza4kBSraTMcsP4tRVl0pyMs8tpM1IR3zLQrh610PpDMbMsFhguhK7wHv1dH1wtO62LkmYzzByz8On-owpiUdPXy1J7-rJlKUMnUybv5PCVCrCFg17Ea4Ld_IOeOXyqaXOlUNlG4i87ZfgkrVUasDfzWDakeKmBj1nQzRzgMgaA8mvkVmfmKjwWVkEGQQ_cStg');"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/20"></div>
+</div>
+<div class="absolute top-0 w-full px-6 py-4 flex justify-between items-center z-20 text-white/50 text-xs font-medium tracking-wide">
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/5">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+</span>
+<span>System Ready</span>
+</div>
+<span>ID: #A1B2C3</span>
+</div>
+<div class="flex items-center gap-6 hidden sm:flex">
+<span class="flex items-center gap-2"><span class="material-symbols-outlined text-[16px]">wifi</span> dev-net-5g</span>
+<span class="flex items-center gap-2"><span class="material-symbols-outlined text-[16px]">battery_full</span> 100%</span>
+<span class="text-white/80">Oct 24 • 09:41</span>
+</div>
+</div>
+<div class="relative z-10 flex h-full grow flex-col items-center justify-center p-4 animate-slide-up">
+<div class="w-full max-w-[340px] flex flex-col items-center">
+<div class="flex flex-col items-center gap-6 mb-10">
+<div class="group relative cursor-default">
+<div class="h-32 w-32 rounded-full p-[2px] bg-gradient-to-b from-white/20 to-transparent shadow-2xl">
+<div class="h-full w-full rounded-full bg-[#1c1c1f] flex items-center justify-center overflow-hidden relative border border-white/5">
+<span class="material-symbols-outlined text-6xl text-white/70 group-hover:text-primary transition-colors duration-300">terminal</span>
+<div class="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent pointer-events-none"></div>
+</div>
+</div>
+</div>
+<div class="text-center">
+<h1 class="text-2xl font-semibold text-white tracking-tight mb-1">Administrator</h1>
+<p class="text-white/40 text-sm">DevEnvironment Host</p>
+</div>
+</div>
+<form class="w-full flex flex-col gap-4">
+<div class="relative group">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-white/40 text-[20px] group-focus-within:text-white transition-colors">person</span>
+<input class="glass-input pl-11" placeholder="Username" type="text" value="root"/>
+</div>
+<div class="relative group">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-white/40 text-[20px] group-focus-within:text-white transition-colors">key</span>
+<input class="glass-input pl-11" placeholder="Password" type="password"/>
+<button class="absolute right-3 top-1/2 -translate-y-1/2 text-white/20 hover:text-white transition-colors p-1" type="button">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+</div>
+<button class="mt-4 w-full h-12 rounded-lg bg-primary hover:bg-[#ebe81e] active:scale-[0.98] transition-all duration-200 flex items-center justify-center shadow-[0_0_25px_rgba(249,245,6,0.15)] group relative overflow-hidden">
+<span class="relative z-10 text-black text-sm font-bold tracking-wide mr-2">Log In</span>
+<span class="relative z-10 material-symbols-outlined text-black group-hover:translate-x-1 transition-transform text-[20px]">arrow_forward</span>
+</button>
+<div class="flex justify-between items-center mt-2 px-1">
+<a class="text-xs text-white/40 hover:text-white transition-colors" href="#">Forgot password?</a>
+<a class="text-xs text-white/40 hover:text-white transition-colors flex items-center gap-1" href="#">
+<span class="material-symbols-outlined text-[14px]">token</span> Token Login
+                    </a>
+</div>
+</form>
+</div>
+</div>
+<div class="fixed bottom-8 sm:bottom-12 z-20 flex gap-6 items-center justify-center w-full">
+<button class="group relative h-12 w-12 rounded-full glass flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 hover:scale-110 transition-all duration-300">
+<span class="material-symbols-outlined">power_settings_new</span>
+<span class="absolute -top-10 bg-black text-white text-[10px] py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity border border-white/10">Shut Down</span>
+</button>
+<button class="group relative h-12 w-12 rounded-full glass flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 hover:scale-110 transition-all duration-300">
+<span class="material-symbols-outlined">restart_alt</span>
+<span class="absolute -top-10 bg-black text-white text-[10px] py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity border border-white/10">Restart</span>
+</button>
+<button class="group relative h-12 w-12 rounded-full glass flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 hover:scale-110 transition-all duration-300">
+<span class="material-symbols-outlined">settings</span>
+<span class="absolute -top-10 bg-black text-white text-[10px] py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity border border-white/10">Settings</span>
+</button>
+</div>
+
+</body></html>

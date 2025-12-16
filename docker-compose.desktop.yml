@@ -1,0 +1,46 @@
+version: '3.8'
+
+# Docker Compose configuration for Claude Code Desktop version
+# Builds and runs the web-desktop application with Nginx reverse proxy
+
+services:
+  claude-code-desktop:
+    # Service name for the desktop application
+    build:
+      context: .
+      dockerfile: Dockerfile.desktop
+
+    # Container identifier
+    container_name: claude-code-desktop
+
+    # Port mappings - expose Nginx main port only
+    ports:
+      - "60000:3000"
+
+    # Volume mounts for workspace, configuration, and development
+    volumes:
+      # Workspace directory for user projects and files
+      - ./workspace:/workspace
+
+      # Claude configuration directory
+      - ./claude-config:/home/claude/.config/claude-code
+
+      # Web-desktop application for development
+      - ./web-desktop:/app/web-desktop
+
+      # Backend application files
+      - ./backend:/app/backend
+
+    # Environment variables
+    environment:
+      # Virtual display for headless browser automation
+      - DISPLAY=:99
+
+      # Playwright browsers cache location
+      - PLAYWRIGHT_BROWSERS_PATH=/usr/local/share/playwright
+
+    # Shared memory size - essential for Chromium/Playwright to function properly
+    shm_size: '2gb'
+
+    # Restart policy
+    restart: unless-stopped

@@ -1,0 +1,104 @@
+/**
+ * Workspace Container Styling
+ *
+ * Full-screen area between TopBar and Dock that contains all open windows.
+ * Features:
+ * - Dark background (#0f0f12) with optional gradient overlay
+ * - Flex layout to fill available space
+ * - Relative positioning for absolute child windows
+ * - Overflow hidden to prevent window content from spilling
+ * - Click handling for window focus management
+ */
+
+.workspace {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background-color: #0f0f12;
+  background-image: linear-gradient(135deg, #0f0f12 0%, #1a1a1f 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: stretch;
+}
+
+/* Windows container - absolute positioning for windows */
+.workspace-windows-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  flex: 1;
+}
+
+/**
+ * Empty State
+ *
+ * Displayed when no windows are open. Provides visual feedback
+ * and guidance to users to open an application.
+ */
+.workspace-empty-state {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 1.1rem;
+  font-weight: 300;
+  letter-spacing: 0.5px;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 300px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.workspace-empty-state p {
+  margin: 0;
+  padding: 2rem;
+  line-height: 1.6;
+}
+
+/**
+ * Fade-in Animation
+ *
+ * Smooth entry animation for empty state message
+ */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -45%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+/**
+ * Responsive Design
+ *
+ * Adapt to different screen sizes while maintaining
+ * workspace functionality and window visibility
+ */
+@media (max-width: 1024px) {
+  .workspace-empty-state {
+    font-size: 1rem;
+  }
+
+  .workspace-empty-state p {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .workspace-empty-state {
+    font-size: 0.9rem;
+  }
+
+  .workspace-empty-state p {
+    padding: 1rem;
+    min-width: 200px;
+  }
+}

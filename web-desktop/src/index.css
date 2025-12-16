@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* Import Spline Sans font */
+  @import url('https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&display=swap');
+
+  * {
+    @apply m-0 p-0 box-border;
+  }
+
+  body {
+    @apply font-display antialiased bg-background-dark text-white overflow-hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  #root {
+    @apply w-screen h-screen;
+  }
+
+  /* Material Symbols configuration */
+  .material-symbols-outlined {
+    font-variation-settings:
+      'FILL' 0,
+      'wght' 400,
+      'GRAD' 0,
+      'opsz' 24;
+    user-select: none;
+  }
+}
+
+@layer components {
+  /* Glassmorphism effect */
+  .glass {
+    @apply bg-black/20 backdrop-blur-md border border-white/5 shadow-lg;
+  }
+
+  /* Glass input fields */
+  .glass-input {
+    @apply w-full bg-white/5 border border-white/10 rounded-lg h-12 px-4 text-white placeholder-white/30
+           focus:outline-none focus:bg-white/10 focus:border-white/30 focus:ring-1 focus:ring-white/20
+           transition-all duration-200;
+  }
+
+  /* Dock icon hover effects */
+  .dock-icon {
+    @apply relative flex items-center justify-center w-14 h-14 rounded-xl transition-all duration-200 ease-out cursor-pointer;
+    @apply hover:scale-125 hover:-translate-y-2;
+    @apply active:scale-110;
+  }
+}
+
+@layer utilities {
+  /* Selection color utility */
+  ::selection {
+    @apply bg-primary text-black;
+  }
+}

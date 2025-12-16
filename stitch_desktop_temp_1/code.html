@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Desktop Environment - Refined</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "accent": "#f9f506",
+                        "background-dark": "#0a0a0a",
+                        "surface-dark": "#171717",
+                        "surface-highlight": "#27272a",
+                    },
+                    fontFamily: {
+                        "display": ["Spline Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #3f3f46; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #52525b; 
+        }.dock-item {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .dock-item:hover {
+            transform: translateY(-8px) scale(1.1);
+        }
+    </style>
+</head>
+<body class="bg-background-dark font-display overflow-hidden h-screen w-full select-none text-white antialiased">
+<div class="relative flex flex-col h-full w-full">
+<div class="absolute inset-0 z-0 bg-[#050505]">
+<div class="w-full h-full bg-cover bg-center opacity-30 pointer-events-none mix-blend-overlay" data-alt="Abstract geometric shapes minimalistic wallpaper" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDWHQwuuszGqoxVyLCawZr4pCHLU2fxAwT8U2RvvVGUt050wcrcsPmS4R-uf4sicVSPbmerx9lK4uWSiLu_cMh2nvP9kbbIhRkIMTOcEZxLmWMMdeg7bSNlBSf6otHMoU0xqWVIFUZNUH4GAJfZ5WDyKPZ2qNCbmEo98ReJ5d8UGIfggavHV7KJD9NvU01xZT3bdJ03UCeloBSvke2yOzcgPvoIDWjZ45jdHt4f7Eoi_v_RcchAgaTgeaR2_l6vcOjQXur83hOPnu_N");'>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-background-dark/60"></div>
+<div class="absolute inset-0 bg-black/40"></div>
+</div>
+<header class="relative z-20 flex items-center justify-between px-6 py-3 bg-black/10 backdrop-blur-md border-b border-white/5 shadow-sm">
+<div class="flex items-center gap-6">
+<button class="flex items-center justify-center p-2 hover:bg-white/10 rounded-full transition-colors text-white/80 hover:text-white">
+<span class="material-symbols-outlined text-[22px]">grid_view</span>
+</button>
+<div class="flex flex-col text-white/90">
+<span class="text-sm font-bold leading-none tracking-tight">10:30 AM</span>
+<span class="text-[10px] font-medium opacity-60 leading-none mt-1 uppercase tracking-wide">Mon, Jan 01</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center pl-1">
+<div class="flex items-center gap-3 pl-1 pr-4 py-1.5 rounded-l-full rounded-r-full md:rounded-r-none hover:bg-white/5 border border-transparent hover:border-white/5 transition-all cursor-pointer group">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-8 border border-white/10 shadow-sm" data-alt="User profile avatar showing a smiling person" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD9voBFGyvlWTcgcHcsN2TsDBeeac_WN7fyrkYdRHcW4BNYYmePIfde2A7LlnRQ7zlO-kAs8n9ILP-KFQ6cnh3KtSgKjS03CVgem1FfkaVeqkxLC-2Z70hQYPBOVHikn2vG4kx_yaZiByXXxVUIlzhfkss5j-GAULoxp2BTWsqLbd57iNfVYCqjRhGaNv8Bp-kxhBNj27HaplkAdk0LE1w4ebuFzx9N0FyfPAh15MOTZ7BX_Etlxf_ua3ujxKB800p1P52Y13sy65OE");'>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-medium text-white/90 leading-none group-hover:text-white">Dev User</span>
+<span class="text-[10px] text-white/50 leading-none mt-1">Online</span>
+</div>
+</div>
+<div class="hidden md:flex h-8 w-px bg-white/10 mx-1"></div>
+<button class="hidden md:flex items-center justify-center size-9 hover:bg-red-500/10 text-white/60 hover:text-red-400 rounded-full transition-all group ml-1" title="Logout">
+<span class="material-symbols-outlined text-[20px]">power_settings_new</span>
+</button>
+</div>
+</div>
+</header>
+<main class="relative z-10 flex-1 flex flex-col items-center justify-center p-8">
+<div class="flex flex-col items-center gap-8 animate-fade-in-up">
+<div class="relative group cursor-pointer">
+<div class="absolute -inset-4 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<div class="bg-surface-dark/50 backdrop-blur-sm p-6 rounded-3xl shadow-2xl border border-white/5 relative">
+<div class="bg-center bg-no-repeat bg-cover rounded-2xl w-64 h-40 opacity-80" data-alt="Illustration of a clean desk setup with computer" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCjSuOMafLlu6ybvuv8qxMxstMMuM68P8M6FQJbJJfza4KVC27mp3O6A0789SZmzILXvNmX8d4Jr9vol1Eh3EN7ZhLeYLDo9kvi5fR4-QQ6SpY9873eJ7CWyT2GOWe_UEvY8twEdPrFYB1Kl_67mpsYjd4rQvPxHCYlDdfdrDnRhglS1lNB7e1JHBAMI2Y2esoLqquFRZu1sEDdThyK5_W4rcx48CmlIEHX2W29Iv4Gw-Ul0ePYyIoeWcNtDfWB7Y9WsaQRWXHMJNNC");'>
+</div>
+</div>
+</div>
+<div class="flex flex-col items-center gap-3 text-center max-w-md">
+<h1 class="text-4xl font-bold tracking-tight text-white drop-shadow-lg">Welcome Back</h1>
+<p class="text-base text-white/50 font-light">
+                        Your environment is ready. Select an app to begin.
+                    </p>
+</div>
+</div>
+<div class="absolute top-8 left-8 flex flex-col gap-8">
+<button class="group flex flex-col items-center gap-3 w-20 p-2 rounded-2xl hover:bg-white/5 focus:bg-white/10 transition-colors">
+<div class="size-14 bg-[#1e293b]/80 text-blue-400 rounded-2xl flex items-center justify-center shadow-lg border border-white/5 group-hover:scale-105 transition-transform backdrop-blur-md">
+<span class="material-symbols-outlined text-3xl">description</span>
+</div>
+<span class="text-[11px] font-medium text-center text-white/80 line-clamp-2 drop-shadow-md tracking-wide">Readme.md</span>
+</button>
+<button class="group flex flex-col items-center gap-3 w-20 p-2 rounded-2xl hover:bg-white/5 focus:bg-white/10 transition-colors">
+<div class="size-14 bg-[#1e293b]/80 text-yellow-400 rounded-2xl flex items-center justify-center shadow-lg border border-white/5 group-hover:scale-105 transition-transform backdrop-blur-md">
+<span class="material-symbols-outlined text-3xl">folder_zip</span>
+</div>
+<span class="text-[11px] font-medium text-center text-white/80 line-clamp-2 drop-shadow-md tracking-wide">Assets</span>
+</button>
+</div>
+</main>
+<div class="fixed bottom-8 left-1/2 -translate-x-1/2 z-50">
+<div class="flex items-end gap-3 px-5 py-4 bg-[#0f0f10]/80 backdrop-blur-2xl border border-white/10 rounded-3xl shadow-2xl ring-1 ring-black/20">
+<div class="group relative flex flex-col items-center gap-2">
+<div class="absolute -top-14 opacity-0 group-hover:opacity-100 transition-all transform translate-y-2 group-hover:translate-y-0 bg-surface-highlight text-white border border-white/10 text-[10px] font-bold py-1.5 px-3 rounded-lg pointer-events-none shadow-xl">
+                        Terminal
+                    </div>
+<button class="dock-item size-14 bg-[#18181b] text-accent rounded-2xl flex items-center justify-center shadow-lg border border-white/5 hover:border-white/20 relative overflow-hidden group-active:scale-95">
+<div class="absolute inset-0 bg-gradient-to-t from-white/5 to-transparent pointer-events-none"></div>
+<span class="material-symbols-outlined text-[28px]">terminal</span>
+</button>
+<div class="size-1 bg-accent rounded-full shadow-[0_0_8px_rgba(249,245,6,0.6)]"></div>
+</div>
+<div class="group relative flex flex-col items-center gap-2">
+<div class="absolute -top-14 opacity-0 group-hover:opacity-100 transition-all transform translate-y-2 group-hover:translate-y-0 bg-surface-highlight text-white border border-white/10 text-[10px] font-bold py-1.5 px-3 rounded-lg pointer-events-none shadow-xl">
+                        Browser
+                    </div>
+<button class="dock-item size-14 bg-blue-600 text-white rounded-2xl flex items-center justify-center shadow-lg border border-white/5 hover:border-white/20 relative overflow-hidden group-active:scale-95">
+<div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none"></div>
+<span class="material-symbols-outlined text-[28px]">public</span>
+</button>
+<div class="size-1 bg-white/20 rounded-full"></div>
+</div>
+<div class="group relative flex flex-col items-center gap-2">
+<div class="absolute -top-14 opacity-0 group-hover:opacity-100 transition-all transform translate-y-2 group-hover:translate-y-0 bg-surface-highlight text-white border border-white/10 text-[10px] font-bold py-1.5 px-3 rounded-lg pointer-events-none shadow-xl">
+                        Explorer
+                    </div>
+<button class="dock-item size-14 bg-orange-500 text-white rounded-2xl flex items-center justify-center shadow-lg border border-white/5 hover:border-white/20 relative overflow-hidden group-active:scale-95">
+<div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none"></div>
+<span class="material-symbols-outlined text-[28px]">folder_open</span>
+</button>
+<div class="size-1 bg-transparent"></div>
+</div>
+<div class="w-px h-10 bg-white/10 mx-1 mb-3"></div>
+<div class="group relative flex flex-col items-center gap-2">
+<div class="absolute -top-14 opacity-0 group-hover:opacity-100 transition-all transform translate-y-2 group-hover:translate-y-0 bg-surface-highlight text-white border border-white/10 text-[10px] font-bold py-1.5 px-3 rounded-lg pointer-events-none shadow-xl">
+                        Settings
+                    </div>
+<button class="dock-item size-14 bg-zinc-700 text-zinc-300 rounded-2xl flex items-center justify-center shadow-lg border border-white/5 hover:border-white/20 relative overflow-hidden group-active:scale-95">
+<span class="material-symbols-outlined text-[28px] animate-spin-slow">settings</span>
+</button>
+<div class="size-1 bg-transparent"></div>
+</div>
+</div>
+</div>
+</div>
+
+</body></html>

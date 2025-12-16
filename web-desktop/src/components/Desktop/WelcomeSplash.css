@@ -1,0 +1,119 @@
+/**
+ * Welcome Back Splash Screen Styles
+ * Full-screen overlay with Framer Motion animations and Tailwind CSS
+ * Dark theme consistent with desktop environment
+ */
+
+/* Main splash screen overlay */
+.welcome-splash {
+  @apply fixed inset-0 z-9999 flex flex-col items-center justify-center cursor-pointer overflow-hidden;
+}
+
+/* Background with dark gradient overlay */
+.welcome-splash-bg {
+  @apply absolute inset-0 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-950;
+  opacity: 0.95;
+  backdrop-filter: blur(2px);
+}
+
+/* Content container - centered and above background */
+.welcome-content {
+  @apply relative z-10 flex flex-col items-center justify-center gap-6 text-center text-white;
+  animation: softPulse 3s ease-in-out infinite;
+}
+
+/* Main heading - "Welcome Back" */
+.welcome-heading {
+  @apply text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight;
+  background: linear-gradient(135deg, #e0e7ff 0%, #bfdbfe 50%, #93c5fd 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.02em;
+}
+
+/* User name display */
+.welcome-username {
+  @apply text-3xl md:text-4xl font-semibold text-blue-200;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Subtitle with interaction hint */
+.welcome-subtitle {
+  @apply text-lg md:text-xl text-gray-300 mt-4;
+  opacity: 0.8;
+  letter-spacing: 0.5px;
+}
+
+/* Desktop icons preview section - positioned at bottom corners */
+.welcome-icons-preview {
+  @apply absolute bottom-12 left-8 md:left-16 flex gap-12 z-10;
+}
+
+/* Individual icon item */
+.icon-item {
+  @apply flex flex-col items-center gap-3 text-white;
+}
+
+/* Icon box styling */
+.icon-box {
+  @apply relative w-16 h-16 md:w-20 md:h-20 rounded-2xl flex items-center justify-center;
+  @apply transition-all duration-300 ease-out;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* README icon styling */
+.readme-icon {
+  @apply bg-gradient-to-br from-orange-500/20 to-red-500/20;
+  border-color: rgba(249, 115, 22, 0.3);
+
+  & .material-symbols-outlined {
+    @apply text-3xl md:text-4xl text-orange-300;
+  }
+}
+
+/* Assets folder icon styling */
+.assets-icon {
+  @apply bg-gradient-to-br from-blue-500/20 to-cyan-500/20;
+  border-color: rgba(59, 130, 246, 0.3);
+
+  & .material-symbols-outlined {
+    @apply text-3xl md:text-4xl text-blue-300;
+  }
+}
+
+/* Icon label */
+.icon-item p {
+  @apply text-sm md:text-base font-medium text-gray-300;
+  opacity: 0.9;
+}
+
+/* Subtle pulse animation for content */
+@keyframes softPulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.95;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .welcome-heading {
+    @apply text-4xl;
+  }
+
+  .welcome-username {
+    @apply text-2xl;
+  }
+
+  .welcome-subtitle {
+    @apply text-base;
+  }
+
+  .welcome-icons-preview {
+    @apply bottom-8 left-4 gap-8;
+  }
+}

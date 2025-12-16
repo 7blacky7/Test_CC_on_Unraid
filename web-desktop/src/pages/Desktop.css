@@ -1,0 +1,68 @@
+.desktop-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f5f5f5;
+}
+
+.desktop-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+}
+
+.desktop-logo {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #667eea;
+}
+
+.logout-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: transparent;
+  color: #666;
+  border: 2px solid #e0e0e0;
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'Spline Sans', sans-serif;
+}
+
+.logout-button:hover {
+  border-color: #667eea;
+  color: #667eea;
+  background: #f0f4ff;
+}
+
+.logout-button .material-symbols-outlined {
+  font-size: 20px;
+}
+
+.desktop-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.desktop-content h1 {
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.desktop-content p {
+  color: #666;
+  font-size: 1.1rem;
+}
