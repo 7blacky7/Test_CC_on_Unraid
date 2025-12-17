@@ -21,18 +21,25 @@ const LoginScreen = () => {
     setLoading(true);
     setError(null);
 
-    try {
-      const { user, token } = await authService.login(username, password);
-      setUser(user);
+    // TEMPORARY: Bypass auth until backend is ready
+    setTimeout(() => {
+      setUser({ username });
       setLoading(false);
       navigate('/desktop');
-    } catch (error) {
-      const message = error.message || 'Login failed';
-      setErrorMessage(message);
-      setError(message);
-      setLoading(false);
-      setIsLoading(false);
-    }
+    }, 500);
+
+    // try {
+    //   const { user, token } = await authService.login(username, password);
+    //   setUser(user);
+    //   setLoading(false);
+    //   navigate('/desktop');
+    // } catch (error) {
+    //   const message = error.message || 'Login failed';
+    //   setErrorMessage(message);
+    //   setError(message);
+    //   setLoading(false);
+    //   setIsLoading(false);
+    // }
   };
 
   const getCurrentDateTime = () => {
