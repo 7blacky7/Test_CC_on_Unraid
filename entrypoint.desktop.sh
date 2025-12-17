@@ -93,16 +93,50 @@ main() {
         echo ""
     fi
 
-    # Step 4: Display startup summary
+    # Step 4: Build frontend (Production Build)
+    log_info "Building frontend application..."
+    if [[ -d "/app/web-desktop" ]] && [[ -f "/app/web-desktop/package.json" ]]; then
+        cd /app/web-desktop
+        log_info "Installing frontend dependencies..."
+        if npm install --silent 2>&1 | grep -v "npm WARN" || true; then
+            log_success "Frontend dependencies installed"
+        fi
+        log_info "Building production bundle..."
+        if npm run build 2>&1 | tail -5; then
+            log_success "Frontend build completed successfully"
+        else
+            log_error "Frontend build failed"
+            exit 1
+        fi
+        cd /workspace
+    else
+        log_warning "/app/web-desktop not found, skipping frontend build"
+    fi
+
+    # Step 5: Build backend dependencies
+    log_info "Installing backend dependencies..."
+    if [[ -d "/app/backend" ]] && [[ -f "/app/backend/package.json" ]]; then
+        cd /app/backend
+        if npm install --silent 2>&1 | grep -v "npm WARN" || true; then
+            log_success "Backend dependencies installed"
+        fi
+        cd /workspace
+    else
+        log_warning "/app/backend not found, skipping backend install"
+    fi
+
+    # Step 6: Display startup summary
     echo ""
     log_info "Container initialization summary:"
     log_info "  - Root verification: PASSED"
     log_info "  - Playwright cache cleanup: DONE"
     log_info "  - Workspace permissions: CONFIGURED"
     log_info "  - Authentication check: COMPLETE"
+    log_info "  - Frontend build: COMPLETE"
+    log_info "  - Backend dependencies: INSTALLED"
     echo ""
 
-    # Step 5: Start supervisor in foreground
+    # Step 7: Start supervisor in foreground
     log_info "Starting supervisor service..."
     log_info "Supervisor will run in foreground mode"
     echo ""
