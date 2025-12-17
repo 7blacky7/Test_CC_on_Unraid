@@ -7,12 +7,7 @@ export default defineConfig({
   server: {
     port: 5173,
     host: '0.0.0.0',
-    hmr: {
-      // HMR through nginx proxy
-      protocol: 'ws',
-      host: 'localhost',
-      port: 3000
-    },
+    hmr: false, // Disable HMR to prevent reload loops in Docker
     watch: {
       usePolling: true,
       interval: 1000
