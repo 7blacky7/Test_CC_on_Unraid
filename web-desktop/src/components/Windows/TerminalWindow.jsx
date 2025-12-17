@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useWindowStore } from '../../store/windowStore';
 import Window from './Window';
 import './TerminalWindow.css';
@@ -15,6 +15,7 @@ import './TerminalWindow.css';
  * - Terminal icon in header
  * - Responsive iframe that fills content area
  * - No iframe border for seamless integration
+ * - Auto-focus iframe when window is focused for keyboard input
  *
  * Props:
  * - windowId: unique identifier for the window (id or windowId)
@@ -28,22 +29,37 @@ const TerminalWindow = ({
   windowId,
   title = 'Terminal',
   icon = 'terminal',
+  isFocused,
   ...props
 }) => {
   const effectiveId = id || windowId;
+  const iframeRef = useRef(null);
 
   // Terminal service URL - proxied by Nginx to ttyd:7681
   const terminalUrl = '/terminal/';
+
+  // Auto-focus iframe when window is focused to enable keyboard input
+  useEffect(() => {
+    if (isFocused && iframeRef.current) {
+      // Small delay to ensure iframe is loaded
+      const timer = setTimeout(() => {
+        iframeRef.current?.focus();
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [isFocused]);
 
   return (
     <Window
       id={effectiveId}
       title={title}
       icon={icon}
+      isFocused={isFocused}
       {...props}
     >
       <div className="terminal-container">
         <iframe
+          ref={iframeRef}
           src={terminalUrl}
           className="terminal-iframe"
           title="Terminal"
