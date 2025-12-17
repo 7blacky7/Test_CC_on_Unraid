@@ -57,14 +57,13 @@ const TerminalWindow = ({
       isFocused={isFocused}
       {...props}
     >
-      <div className="terminal-container">
+      <div className="terminal-container" onClick={() => iframeRef.current?.focus()}>
         <iframe
           ref={iframeRef}
           src={terminalUrl}
           className="terminal-iframe"
           title="Terminal"
           allow="clipboard-read; clipboard-write"
-          sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
         />
       </div>
     </Window>
