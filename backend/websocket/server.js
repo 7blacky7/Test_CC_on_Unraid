@@ -4,36 +4,47 @@ import BrowserStreamService from '../services/browserStreamService.js';
 
 const PORT = process.env.WS_PORT || 8081;
 const MAX_BROWSERS = 5;
+const DEFAULT_SESSION_ID = 'default';
 
 const wss = new WebSocketServer({ port: PORT });
 const sessions = new Map(); // sessionId -> { ws, browser, page, cdpSession }
 
 console.log(`[WebSocket] Server starting on port ${PORT}`);
 
+// Ensure default session exists
+async function ensureDefaultSession() {
+  let session = BrowserStreamService.getSession(DEFAULT_SESSION_ID);
+
+  if (!session) {
+    console.log('[WebSocket] Creating default browser session...');
+    session = await BrowserStreamService.createSession(DEFAULT_SESSION_ID);
+    console.log('[WebSocket] Default browser session created');
+  }
+
+  return session;
+}
+
 wss.on('connection', async (ws) => {
   console.log('[WebSocket] Client connected');
 
-  // Check browser limit
-  if (sessions.size >= MAX_BROWSERS) {
-    console.warn('[WebSocket] Browser limit reached');
-    ws.send(JSON.stringify({
-      type: 'error',
-      message: `Browser limit reached (max ${MAX_BROWSERS})`
-    }));
-    ws.close();
-    return;
-  }
-
-  const sessionId = uuidv4();
-  console.log(`[WebSocket] Creating session: ${sessionId}`);
+  // Use unique client ID for tracking
+  const clientId = uuidv4();
+  console.log(`[WebSocket] Client ID: ${clientId}`);
 
   try {
-    // Launch browser
-    const browserSession = await BrowserStreamService.createSession(sessionId);
-    sessions.set(sessionId, { ws, ...browserSession });
+    // Use shared default browser session instead of creating new one
+    const browserSession = await ensureDefaultSession();
 
-    // Setup CDP screencast
-    await BrowserStreamService.startScreencast(sessionId, (frameData) => {
+    // Store client with reference to shared session
+    sessions.set(clientId, {
+      ws,
+      sessionId: DEFAULT_SESSION_ID,
+      ...browserSession
+    });
+
+    // Setup CDP screencast for this client
+    // Each client gets their own screencast callback but shares the same page
+    await BrowserStreamService.startScreencast(DEFAULT_SESSION_ID, (frameData) => {
       if (ws.readyState === 1) { // WebSocket.OPEN
         ws.send(JSON.stringify({
           type: 'frame',
@@ -46,17 +57,18 @@ wss.on('connection', async (ws) => {
     // Send initial connection confirmation
     ws.send(JSON.stringify({
       type: 'connected',
-      sessionId,
+      sessionId: DEFAULT_SESSION_ID,
+      clientId: clientId,
       viewport: { width: 1920, height: 1080 }
     }));
 
-    console.log(`[WebSocket] Session ready: ${sessionId}`);
+    console.log(`[WebSocket] Client ready (using default session): ${clientId}`);
 
   } catch (error) {
-    console.error('[WebSocket] Failed to create browser session:', error);
+    console.error('[WebSocket] Failed to setup client session:', error);
     ws.send(JSON.stringify({
       type: 'error',
-      message: 'Failed to start browser'
+      message: 'Failed to connect to browser'
     }));
     ws.close();
     return;
@@ -66,7 +78,7 @@ wss.on('connection', async (ws) => {
   ws.on('message', async (message) => {
     try {
       const data = JSON.parse(message.toString());
-      await handleMessage(sessionId, data);
+      await handleMessage(clientId, data);
     } catch (error) {
       console.error('[WebSocket] Message handling error:', error);
       ws.send(JSON.stringify({
@@ -78,9 +90,10 @@ wss.on('connection', async (ws) => {
 
   // Handle disconnect
   ws.on('close', async () => {
-    console.log(`[WebSocket] Client disconnected: ${sessionId}`);
-    await BrowserStreamService.destroySession(sessionId);
-    sessions.delete(sessionId);
+    console.log(`[WebSocket] Client disconnected: ${clientId}`);
+    // Don't destroy the default session, just remove this client
+    sessions.delete(clientId);
+    console.log(`[WebSocket] Client removed, ${sessions.size} clients remaining`);
   });
 
   // Handle errors
@@ -91,13 +104,13 @@ wss.on('connection', async (ws) => {
 
 /**
  * Handle incoming WebSocket messages
- * @param {string} sessionId - Session identifier
+ * @param {string} clientId - Client identifier
  * @param {Object} message - Parsed message object
  */
-async function handleMessage(sessionId, message) {
-  const session = sessions.get(sessionId);
+async function handleMessage(clientId, message) {
+  const session = sessions.get(clientId);
   if (!session) {
-    console.warn(`[WebSocket] Session not found: ${sessionId}`);
+    console.warn(`[WebSocket] Client not found: ${clientId}`);
     return;
   }
 
@@ -221,10 +234,16 @@ console.log(`[WebSocket] Max browsers: ${MAX_BROWSERS}`);
 process.on('SIGTERM', async () => {
   console.log('[WebSocket] SIGTERM received, closing connections...');
 
-  // Close all browser sessions
-  for (const [sessionId] of sessions) {
-    await BrowserStreamService.destroySession(sessionId);
+  // Close all WebSocket connections
+  for (const [clientId, session] of sessions) {
+    console.log(`[WebSocket] Closing client: ${clientId}`);
+    session.ws.close();
   }
+
+  // Clear sessions map
+  sessions.clear();
+
+  // Note: Default browser session will be destroyed by server.js shutdown
 
   wss.close(() => {
     console.log('[WebSocket] Server closed');

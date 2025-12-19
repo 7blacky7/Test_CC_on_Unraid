@@ -1,0 +1,140 @@
+========================================
+UNRAID UPDATE - Browser Live Integration
+========================================
+
+OPTION 1: AUTOMATISCHES SCRIPT
+--------------------------------------
+1. Kopiere die Datei "unraid-update-browser-live.sh" nach Unraid
+2. SSH in Unraid einloggen
+3. Script ausführbar machen:
+   chmod +x unraid-update-browser-live.sh
+4. Script ausführen:
+   ./unraid-update-browser-live.sh
+
+
+OPTION 2: MANUELL - ALLES IN EINEM BEFEHL
+--------------------------------------
+cd /mnt/y/appdata/claude-code-web-desktop && git fetch origin && git checkout browser-live-integration && git pull origin browser-live-integration && docker stop claude-code-desktop 2>/dev/null; docker rm claude-code-desktop 2>/dev/null; docker build -f Dockerfile.desktop -t claude-code-desktop . && docker run -d --name claude-code-desktop -p 60000:3000 -v /mnt/y/appdata/claude-code-web-desktop:/app -v /mnt/y/appdata/claude-code-web-desktop/workspace:/workspace --shm-size 4gb --privileged claude-code-desktop && sleep 15 && docker exec claude-code-desktop bash -c "cd /app/backend && npm install" && docker restart claude-code-desktop && echo "✅ FERTIG! Öffne http://DEINE-IP:60000"
+
+
+OPTION 3: MANUELL - SCHRITT FÜR SCHRITT
+--------------------------------------
+
+Schritt 1: Ins Verzeichnis gehen
+---------------------------------
+cd /mnt/y/appdata/claude-code-web-desktop
+
+
+Schritt 2: Branch wechseln
+---------------------------------
+git fetch origin
+git checkout browser-live-integration
+git pull origin browser-live-integration
+
+
+Schritt 3: Container stoppen
+---------------------------------
+docker stop claude-code-desktop
+docker rm claude-code-desktop
+
+
+Schritt 4: Image bauen (dauert 2-3 Min)
+---------------------------------
+docker build -f Dockerfile.desktop -t claude-code-desktop .
+
+
+Schritt 5: Container starten
+---------------------------------
+docker run -d \
+  --name claude-code-desktop \
+  -p 60000:3000 \
+  -v /mnt/y/appdata/claude-code-web-desktop:/app \
+  -v /mnt/y/appdata/claude-code-web-desktop/workspace:/workspace \
+  --shm-size 4gb \
+  --privileged \
+  claude-code-desktop
+
+
+Schritt 6: Dependencies installieren
+---------------------------------
+docker exec claude-code-desktop bash -c "cd /app/backend && npm install"
+
+
+Schritt 7: Container neu starten
+---------------------------------
+docker restart claude-code-desktop
+
+
+Schritt 8: Status checken
+---------------------------------
+docker logs -f claude-code-desktop
+
+
+========================================
+WICHTIGE BEFEHLE ZUM DEBUGGEN
+========================================
+
+Container Status:
+-----------------
+docker ps | grep claude-code-desktop
+
+Logs live anschauen:
+--------------------
+docker logs -f claude-code-desktop
+
+Services im Container checken:
+------------------------------
+docker exec claude-code-desktop supervisorctl status
+
+In Container einloggen:
+-----------------------
+docker exec -it claude-code-desktop bash
+
+WebSocket Server Logs:
+----------------------
+docker exec claude-code-desktop supervisorctl tail -f websocket-server
+
+
+========================================
+WAS IST NEU?
+========================================
+
+✅ Playwright Browser mit Live-Streaming (statt noVNC)
+✅ WebSocket-Server auf Port 8081
+✅ Echtzeit Browser-Kontrolle (Maus, Keyboard)
+✅ Bis zu 5 Browser gleichzeitig
+✅ Shared Memory auf 4GB erhöht (war 2GB)
+✅ Neue Dependencies: ws, uuid, playwright
+
+
+========================================
+BROWSER ÖFFNEN
+========================================
+
+1. Gehe zu: http://DEINE-UNRAID-IP:60000
+2. Klicke auf Browser-Icon im Dock
+3. Browser-Fenster öffnet sich mit Google
+4. Du kannst jetzt normal browsen!
+
+
+========================================
+FALLS PROBLEME AUFTRETEN
+========================================
+
+Problem: "WebSocket connection failed"
+Lösung:
+  docker exec claude-code-desktop supervisorctl restart websocket-server
+  docker exec claude-code-desktop supervisorctl tail -f websocket-server
+
+Problem: "Browser öffnet nicht"
+Lösung:
+  docker exec claude-code-desktop supervisorctl status
+  docker logs claude-code-desktop
+
+Problem: "npm install funktioniert nicht"
+Lösung:
+  docker exec -it claude-code-desktop bash
+  cd /app/backend
+  npm install --verbose
+  exit
+  docker restart claude-code-desktop

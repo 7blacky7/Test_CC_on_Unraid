@@ -137,7 +137,7 @@ router.get('/', async (req, res) => {
         data: {
           type: 'directory',
           path: requestedPath,
-          items
+          files: items
         }
       });
     }

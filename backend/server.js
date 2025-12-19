@@ -2,6 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import { loginHandler, authMiddleware } from './auth.js';
 import filesRouter from './files.js';
+import browserRouter from './browser.js';
+import browserStreamService from './services/browserStreamService.js';
 
 // Initialize Express app
 const app = express();
@@ -81,6 +83,9 @@ app.post('/api/auth/login', loginHandler);
 // Apply authentication middleware to all /api/files routes
 app.use('/api/files', authMiddleware, filesRouter);
 
+// Browser API routes (no auth required for now - can be added later)
+app.use('/api/browser', browserRouter);
+
 // ============================================================================
 // Error Handling
 // ============================================================================
@@ -109,40 +114,73 @@ app.use((error, req, res, next) => {
 // Server Startup
 // ============================================================================
 
-// Start server
-app.listen(PORT, () => {
-  console.log('='.repeat(60));
-  console.log('File API Backend Server');
-  console.log('='.repeat(60));
-  console.log(`Server running on port ${PORT}`);
-  console.log(`Health check: http://localhost:${PORT}/health`);
-  console.log(`API info: http://localhost:${PORT}/api`);
-  console.log('');
-  console.log('Authentication:');
-  console.log('  POST /api/auth/login');
-  console.log('');
-  console.log('File Operations (requires JWT):');
-  console.log('  GET    /api/files?path=...');
-  console.log('  GET    /api/files/read?path=...');
-  console.log('  POST   /api/files');
-  console.log('  PUT    /api/files');
-  console.log('  DELETE /api/files?path=...');
-  console.log('');
-  console.log('Test credentials:');
-  console.log('  Username: admin, Password: admin123');
-  console.log('  Username: user, Password: user123');
-  console.log('='.repeat(60));
-});
+// Initialize default browser session before starting server
+async function initializeServer() {
+  console.log('[Server] Initializing default browser session...');
+
+  try {
+    await browserStreamService.createSession('default');
+    console.log('[Server] Default browser session created');
+  } catch (error) {
+    console.error('[Server] Failed to create default browser session:', error.message);
+    console.error('[Server] Browser API will create session on first request');
+  }
+
+  // Start server
+  app.listen(PORT, () => {
+    console.log('='.repeat(60));
+    console.log('File API Backend Server');
+    console.log('='.repeat(60));
+    console.log(`Server running on port ${PORT}`);
+    console.log(`Health check: http://localhost:${PORT}/health`);
+    console.log(`API info: http://localhost:${PORT}/api`);
+    console.log('');
+    console.log('Authentication:');
+    console.log('  POST /api/auth/login');
+    console.log('');
+    console.log('File Operations (requires JWT):');
+    console.log('  GET    /api/files?path=...');
+    console.log('  GET    /api/files/read?path=...');
+    console.log('  POST   /api/files');
+    console.log('  PUT    /api/files');
+    console.log('  DELETE /api/files?path=...');
+    console.log('');
+    console.log('Browser Operations:');
+    console.log('  POST   /api/browser/navigate');
+    console.log('  POST   /api/browser/click');
+    console.log('  POST   /api/browser/screenshot');
+    console.log('  GET    /api/browser/content');
+    console.log('  POST   /api/browser/evaluate');
+    console.log('  POST   /api/browser/type');
+    console.log('  POST   /api/browser/wait');
+    console.log('  GET    /api/browser/status');
+    console.log('');
+    console.log('Test credentials:');
+    console.log('  Username: admin, Password: admin123');
+    console.log('  Username: user, Password: user123');
+    console.log('='.repeat(60));
+  });
+}
+
+// Initialize and start server
+initializeServer().catch(console.error);
 
 // Graceful shutdown handler
-process.on('SIGTERM', () => {
-  console.log('SIGTERM received, shutting down gracefully...');
-  process.exit(0);
-});
+async function shutdown() {
+  console.log('Shutting down gracefully...');
 
-process.on('SIGINT', () => {
-  console.log('SIGINT received, shutting down gracefully...');
+  // Destroy default browser session
+  try {
+    await browserStreamService.destroySession('default');
+    console.log('Default browser session destroyed');
+  } catch (error) {
+    console.error('Error destroying browser session:', error.message);
+  }
+
   process.exit(0);
-});
+}
+
+process.on('SIGTERM', shutdown);
+process.on('SIGINT', shutdown);
 
 export default app;
