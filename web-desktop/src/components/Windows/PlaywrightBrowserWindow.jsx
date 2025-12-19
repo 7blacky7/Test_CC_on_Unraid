@@ -141,20 +141,47 @@ const PlaywrightBrowserWindow = ({
 
   /**
    * Handle keyboard events when container is focused
+   * IMPORTANT: Don't intercept events if input fields are focused
    */
   const handleKeyDown = (e) => {
+    // Check if an input element is focused (URL bar, etc.)
+    const activeElement = document.activeElement;
+    const isInputFocused =
+      activeElement?.tagName === 'INPUT' ||
+      activeElement?.tagName === 'TEXTAREA' ||
+      activeElement?.isContentEditable;
+
+    // If input is focused, allow normal typing - don't send to browser stream
+    if (isInputFocused) {
+      return;
+    }
+
     // Allow browser shortcuts like Ctrl+T, Ctrl+W, etc.
-    // But prevent some default behaviors
+    // But prevent some default behaviors for regular keys
     if (!e.ctrlKey && !e.metaKey) {
       e.preventDefault();
     }
+
     sendKey(e.key, 'down');
   };
 
   const handleKeyUp = (e) => {
+    // Check if an input element is focused
+    const activeElement = document.activeElement;
+    const isInputFocused =
+      activeElement?.tagName === 'INPUT' ||
+      activeElement?.tagName === 'TEXTAREA' ||
+      activeElement?.isContentEditable;
+
+    // If input is focused, allow normal typing
+    if (isInputFocused) {
+      return;
+    }
+
     if (!e.ctrlKey && !e.metaKey) {
       e.preventDefault();
     }
+
     sendKey(e.key, 'up');
   };
 
