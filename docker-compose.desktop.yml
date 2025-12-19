@@ -40,7 +40,8 @@ services:
       - PLAYWRIGHT_BROWSERS_PATH=/usr/local/share/playwright
 
     # Shared memory size - essential for Chromium/Playwright to function properly
-    shm_size: '2gb'
+    # Increased to 4gb for multiple browser instances
+    shm_size: '4gb'
 
     # Restart policy
     restart: unless-stopped

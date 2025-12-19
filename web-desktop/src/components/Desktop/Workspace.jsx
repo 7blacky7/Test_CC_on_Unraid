@@ -3,6 +3,7 @@ import { useWindowStore } from '../../store/windowStore';
 import Window from '../Windows/Window';
 import TerminalWindow from '../Windows/TerminalWindow';
 import BrowserWindow from '../Windows/BrowserWindow';
+import PlaywrightBrowserWindow from '../Windows/PlaywrightBrowserWindow';
 import FileExplorer from '../Windows/FileExplorer';
 import './Workspace.css';
 
@@ -86,6 +87,9 @@ const Workspace = () => {
       case 'terminal':
         return <TerminalWindow key={id} {...commonProps} />;
       case 'browser':
+        return <PlaywrightBrowserWindow key={id} {...commonProps} initialUrl="https://google.com" />;
+      case 'browser-old':
+        // Keep old noVNC browser for fallback
         return <BrowserWindow key={id} {...commonProps} />;
       case 'files':
         return <FileExplorer key={id} {...commonProps} />;
