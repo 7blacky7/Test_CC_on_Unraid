@@ -39,19 +39,19 @@ const BrowserToolbar = ({
   };
 
   return (
-    <div className="flex items-center gap-2 p-2 bg-gray-50 border-b border-gray-200">
+    <div className="flex items-center gap-2 p-2 bg-[#1e1e2e] border-b border-gray-700">
       {/* Navigation Buttons */}
       <button
         onClick={onBack}
         disabled={!canGoBack}
-        className={`p-2 rounded hover:bg-gray-200 transition-colors ${
-          !canGoBack ? 'opacity-50 cursor-not-allowed' : ''
+        className={`p-2 rounded hover:bg-gray-700 transition-colors text-gray-300 ${
+          !canGoBack ? 'opacity-30 cursor-not-allowed' : 'hover:text-white'
         }`}
         title="Back"
         aria-label="Go back"
       >
         <svg
-          className="w-4 h-4"
+          className="w-5 h-5"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -68,14 +68,14 @@ const BrowserToolbar = ({
       <button
         onClick={onForward}
         disabled={!canGoForward}
-        className={`p-2 rounded hover:bg-gray-200 transition-colors ${
-          !canGoForward ? 'opacity-50 cursor-not-allowed' : ''
+        className={`p-2 rounded hover:bg-gray-700 transition-colors text-gray-300 ${
+          !canGoForward ? 'opacity-30 cursor-not-allowed' : 'hover:text-white'
         }`}
         title="Forward"
         aria-label="Go forward"
       >
         <svg
-          className="w-4 h-4"
+          className="w-5 h-5"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -91,12 +91,12 @@ const BrowserToolbar = ({
 
       <button
         onClick={onReload}
-        className="p-2 rounded hover:bg-gray-200 transition-colors"
+        className="p-2 rounded hover:bg-gray-700 transition-colors text-gray-300 hover:text-white"
         title="Reload"
         aria-label="Reload page"
       >
         <svg
-          className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`}
+          className={`w-5 h-5 ${loading ? 'animate-spin' : ''}`}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -117,12 +117,12 @@ const BrowserToolbar = ({
           value={inputUrl}
           onChange={(e) => setInputUrl(e.target.value)}
           placeholder="Enter URL..."
-          className="flex-1 px-3 py-1 border border-gray-300 rounded focus:outline-none focus:border-yellow-400 bg-white"
+          className="flex-1 px-3 py-1.5 border border-gray-600 rounded focus:outline-none focus:border-yellow-400 bg-gray-800 text-gray-100 placeholder-gray-500"
           aria-label="URL"
         />
         <button
           type="submit"
-          className="px-4 py-1 bg-yellow-400 text-black rounded hover:bg-yellow-500 font-medium transition-colors"
+          className="px-5 py-1.5 bg-yellow-400 text-black rounded hover:bg-yellow-500 font-semibold transition-colors shadow-sm"
           aria-label="Navigate"
         >
           Go

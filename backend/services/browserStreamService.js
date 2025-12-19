@@ -72,13 +72,13 @@ class BrowserStreamService {
 
     session.frameCallback = frameCallback;
 
-    // Start screencast
+    // Start screencast with optimized performance settings
     await session.cdpSession.send('Page.startScreencast', {
       format: 'jpeg',
-      quality: 80,
+      quality: 75, // Reduced from 80 for better performance
       maxWidth: 1920,
       maxHeight: 1080,
-      everyNthFrame: 1
+      everyNthFrame: 1 // Stream every frame for smooth 30 FPS
     });
 
     // Handle frames

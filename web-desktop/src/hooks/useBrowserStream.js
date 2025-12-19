@@ -198,6 +198,17 @@ const useBrowserStream = () => {
     sendMessage({ type: 'reload' });
   };
 
+  /**
+   * Resize browser viewport
+   * @param {number} width - New viewport width
+   * @param {number} height - New viewport height
+   */
+  const sendResize = (width, height) => {
+    console.log(`[BrowserStream] Resizing viewport to: ${width}x${height}`);
+    sendMessage({ type: 'resize', width, height });
+    setViewport({ width, height });
+  };
+
   return {
     // State
     currentFrame,
@@ -215,7 +226,8 @@ const useBrowserStream = () => {
     navigate,
     goBack,
     goForward,
-    reload
+    reload,
+    sendResize
   };
 };
 

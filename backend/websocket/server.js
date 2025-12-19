@@ -173,6 +173,35 @@ async function handleMessage(sessionId, message) {
         }));
         break;
 
+      case 'resize':
+        console.log(`[WebSocket] Resizing viewport to: ${message.width}x${message.height}`);
+
+        // Stop current screencast
+        await session.cdpSession.send('Page.stopScreencast').catch(() => {});
+
+        // Set new viewport size
+        await page.setViewportSize({
+          width: message.width,
+          height: message.height
+        });
+
+        // Restart screencast with new dimensions
+        await session.cdpSession.send('Page.startScreencast', {
+          format: 'jpeg',
+          quality: 75,
+          maxWidth: message.width,
+          maxHeight: message.height,
+          everyNthFrame: 1
+        });
+
+        // Notify client of successful resize
+        ws.send(JSON.stringify({
+          type: 'resized',
+          width: message.width,
+          height: message.height
+        }));
+        break;
+
       default:
         console.warn(`[WebSocket] Unknown message type: ${message.type}`);
     }

@@ -41,7 +41,8 @@ const PlaywrightBrowserWindow = ({
     navigate,
     goBack,
     goForward,
-    reload
+    reload,
+    sendResize
   } = useBrowserStream();
 
   /**
@@ -72,6 +73,40 @@ const PlaywrightBrowserWindow = ({
       }, 500);
     }
   }, [connected]);
+
+  /**
+   * Handle window resize - adjust browser viewport dynamically
+   */
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    const resizeObserver = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const { width, height } = entry.contentRect;
+
+        // Only resize if dimensions actually changed and are reasonable
+        if (width > 300 && height > 200 && (width !== viewport.width || height !== viewport.height)) {
+          // Debounce resize events (wait 500ms after last resize)
+          if (window.resizeTimeout) clearTimeout(window.resizeTimeout);
+
+          window.resizeTimeout = setTimeout(() => {
+            const newWidth = Math.floor(width);
+            const newHeight = Math.floor(height - 40); // Subtract toolbar height
+
+            console.log(`[PlaywrightBrowser] Window resized to: ${newWidth}x${newHeight}`);
+            sendResize(newWidth, newHeight);
+          }, 500);
+        }
+      }
+    });
+
+    resizeObserver.observe(containerRef.current);
+
+    return () => {
+      resizeObserver.disconnect();
+      if (window.resizeTimeout) clearTimeout(window.resizeTimeout);
+    };
+  }, [viewport, sendResize]);
 
   /**
    * Handle canvas click events
